@@ -8,15 +8,15 @@ Funcionalidades: busca paginada de repositórios, tela de detalhes, lista de iss
 
 ## Stack
 
-| Tecnologia | Versão / Detalhes |
-|---|---|
-| Expo SDK | ~55.0.24 |
-| React Native | 0.83.6 |
-| TypeScript | ~5.9.2 (strict: true) |
-| React | 19.2.0 |
-| TanStack Query | v5 (cache, paginação, pull-to-refresh) |
-| Jest + RNTL | jest-expo preset + @testing-library/react-native |
-| ESLint + Prettier | configurados e passando no CI |
+| Tecnologia        | Versão / Detalhes                                |
+| ----------------- | ------------------------------------------------ |
+| Expo SDK          | ~55.0.24                                         |
+| React Native      | 0.83.6                                           |
+| TypeScript        | ~5.9.2 (strict: true)                            |
+| React             | 19.2.0                                           |
+| TanStack Query    | v5 (cache, paginação, pull-to-refresh)           |
+| Jest + RNTL       | jest-expo preset + @testing-library/react-native |
+| ESLint + Prettier | configurados e passando no CI                    |
 
 ---
 
@@ -42,9 +42,6 @@ yarn ios
 
 # Android (emulador)
 yarn android
-
-# Web
-yarn web
 
 # Testes
 yarn test
@@ -119,23 +116,23 @@ src/
 
 ### Tokens
 
-| Token | Chaves | Valores |
-|---|---|---|
-| `spacing` | xs, sm, md, lg, xl | 4, 8, 16, 24, 32 |
-| `sizes` | xs, sm, md, lg, xl | tipografia e ícones |
-| `colors` | primary, background, surface, text, muted, border, success, warning, danger | light + dark |
-| `radius` | sm, md, lg | 4, 8, 16 |
+| Token     | Chaves                                                                      | Valores             |
+| --------- | --------------------------------------------------------------------------- | ------------------- |
+| `spacing` | xs, sm, md, lg, xl                                                          | 4, 8, 16, 24, 32    |
+| `sizes`   | xs, sm, md, lg, xl                                                          | tipografia e ícones |
+| `colors`  | primary, background, surface, text, muted, border, success, warning, danger | light + dark        |
+| `radius`  | sm, md, lg                                                                  | 4, 8, 16            |
 
 ### Componentes base
 
-| Componente | Variants / Props controladas |
-|---|---|
-| `Text / Heading` | variant (body, caption, label / h1–h4), size, color |
-| `Button` | variant (primary, outline, ghost), size (sm, md, lg), loading, disabled |
-| `Input` | label, value, error, helperText |
-| `Card / Surface` | — |
-| `Badge / Tag` | tone (default, success, warning, danger, info) |
-| `Avatar` | uri, name (fallback com iniciais), size |
+| Componente       | Variants / Props controladas                                            |
+| ---------------- | ----------------------------------------------------------------------- |
+| `Text / Heading` | variant (body, caption, label / h1–h4), size, color                     |
+| `Button`         | variant (primary, outline, ghost), size (sm, md, lg), loading, disabled |
+| `Input`          | label, value, error, helperText                                         |
+| `Card / Surface` | —                                                                       |
+| `Badge / Tag`    | tone (default, success, warning, danger, info)                          |
+| `Avatar`         | uri, name (fallback com iniciais), size                                 |
 
 **Restrições:** sem `style` livre nas telas, sem componentes não tipados, props controladas (`variant`, `size`, `tone`) em vez de estilos inline.
 
@@ -161,6 +158,7 @@ yarn test:coverage     # gera relatório de cobertura
 ```
 
 Estratégia:
+
 - **Use cases do domínio** (prioridade): testados com `FakeGitHubRepository` (implementa a interface do domínio) — rodáveis em Node puro, sem mocks de React Native.
 - **Smoke tests de componentes**: `@testing-library/react-native` valida renderização e interações básicas dos componentes do Design System.
 
@@ -204,12 +202,12 @@ Este projeto utilizou ferramentas de IA (Claude Code / Claude Sonnet) como auxí
 
 ## Critérios de avaliação
 
-| Dimensão | Peso | Status |
-|---|---|---|
-| Arquitetura & Desacoplamento | Alta | <!-- TODO --> |
-| Qualidade do Código (TS rigoroso) | Alta | <!-- TODO --> |
-| Design System | Média | <!-- TODO --> |
-| UX & Estados | Média | <!-- TODO --> |
-| Testes | Média | <!-- TODO --> |
+| Dimensão                                  | Peso        | Status        |
+| ----------------------------------------- | ----------- | ------------- |
+| Arquitetura & Desacoplamento              | Alta        | <!-- TODO --> |
+| Qualidade do Código (TS rigoroso)         | Alta        | <!-- TODO --> |
+| Design System                             | Média       | <!-- TODO --> |
+| UX & Estados                              | Média       | <!-- TODO --> |
+| Testes                                    | Média       | <!-- TODO --> |
 | Uso de IA (transparência + senso crítico) | Diferencial | <!-- TODO --> |
-| README & Commits | Baixa | <!-- TODO --> |
+| README & Commits                          | Baixa       | <!-- TODO --> |

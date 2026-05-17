@@ -1,7 +1,7 @@
-import React from 'react';
+import { BugIcon, EyeIcon, GitForkIcon, StarIcon } from 'phosphor-react-native';
 import { StyleSheet, View } from 'react-native';
-import type { Repo } from '../../../domain/entities/Repo';
-import { spacing } from '../ds/tokens';
+import type { Repo } from '@domain/entities/Repo';
+import { spacing } from '@ds/tokens';
 import { StatCard } from './StatCard';
 
 interface RepoDetailStatsProps {
@@ -11,10 +11,10 @@ interface RepoDetailStatsProps {
 export function RepoDetailStats({ repo }: RepoDetailStatsProps) {
   return (
     <View style={styles.row}>
-      <StatCard icon="⭐" value={repo.stars} label="Stars" />
-      <StatCard icon="🍴" value={repo.forks} label="Forks" />
-      <StatCard icon="👁️" value={repo.watchers} label="Watchers" />
-      <StatCard icon="🐛" value={repo.openIssuesCount} label="Issues" />
+      <StatCard icon={StarIcon} value={repo.stars} label="Stars" />
+      <StatCard icon={GitForkIcon} value={repo.forks} label="Forks" />
+      <StatCard icon={EyeIcon} value={repo.watchers} label="Watchers" />
+      <StatCard icon={BugIcon} value={repo.openIssuesCount} label="Issues" />
     </View>
   );
 }

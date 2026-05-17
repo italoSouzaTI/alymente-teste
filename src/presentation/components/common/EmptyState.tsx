@@ -1,18 +1,21 @@
-import React from 'react';
-import { StyleSheet, Text as RNText, View } from 'react-native';
-import { spacing } from '../ds/tokens';
-import { Text } from '../ds/Text';
+import type { Icon } from 'phosphor-react-native';
+import { StyleSheet, View } from 'react-native';
+import { useColors } from '@theme/useColors';
+import { Text } from '@ds/Text';
+import { spacing } from '@ds/tokens';
 
 interface EmptyStateProps {
-  emoji: string;
+  icon: Icon;
   title: string;
   description?: string;
 }
 
-export function EmptyState({ emoji, title, description }: EmptyStateProps) {
+export function EmptyState({ icon: IconComponent, title, description }: EmptyStateProps) {
+  const c = useColors();
+
   return (
     <View style={styles.wrapper}>
-      <RNText style={styles.emoji}>{emoji}</RNText>
+      <IconComponent size={48} color={c.onSurfaceVariant} weight="fill" />
       <Text variant="headlineSm" style={styles.center}>
         {title}
       </Text>
@@ -34,6 +37,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.xxl,
     paddingVertical: spacing.xxl,
   },
-  emoji: { fontSize: 48, textAlign: 'center' },
   center: { textAlign: 'center' },
 });

@@ -3,16 +3,16 @@ import { useNavigation } from '@react-navigation/native';
 import type {
   RepoDetailScreenProps,
   ExploreNavigationProp,
-} from '../../infrastructure/navigation/types';
-import { useRepoDetailViewModel } from '../viewmodels/useRepoDetailViewModel';
-import { ErrorState } from '../components/common/ErrorState';
-import { LoadingSpinner } from '../components/common/LoadingSpinner';
+} from '@infrastructure/navigation/types';
+import { useRepoDetailViewModel } from '@viewmodels/useRepoDetailViewModel';
+import { ErrorState } from '@components/common/ErrorState';
+import { LoadingSpinner } from '@components/common/LoadingSpinner';
 import {
   RepoDetailActions,
   RepoDetailHeader,
   RepoDetailLayout,
   RepoDetailStats,
-} from '../components/repo-detail';
+} from '@components/repo-detail';
 
 export function RepoDetailScreen({ route }: RepoDetailScreenProps) {
   const { owner, repo, repoName } = route.params;

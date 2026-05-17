@@ -1,4 +1,4 @@
-import { darkColors, lightColors, type ColorPalette } from '../components/ds/tokens';
+import { darkColors, lightColors, type ColorPalette } from '@ds/tokens';
 import { useThemeMode } from './ThemeModeContext';
 
 export function useColors(): ColorPalette {

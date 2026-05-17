@@ -1,8 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useColors } from '../../theme/useColors';
-import { spacing, type typography } from '../ds/tokens';
-import { Text } from '../ds/Text';
+import { useColors } from '@theme/useColors';
+import { spacing, type typography } from '@ds/tokens';
+import { Text } from '@ds/Text';
 import { ShowcaseSection } from './ShowcaseSection';
 
 const SAMPLES: { variant: keyof typeof typography; label: string }[] = [

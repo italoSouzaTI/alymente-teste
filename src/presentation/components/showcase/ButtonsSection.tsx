@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { spacing } from '../ds/tokens';
-import { Button } from '../ds/Button';
-import { Text } from '../ds/Text';
+import { spacing } from '@ds/tokens';
+import { Button } from '@ds/Button';
+import { Text } from '@ds/Text';
 import { ShowcaseSection } from './ShowcaseSection';
 
 export function ButtonsSection() {

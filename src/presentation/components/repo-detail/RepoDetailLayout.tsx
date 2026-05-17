@@ -1,8 +1,8 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useColors } from '../../theme/useColors';
-import { spacing } from '../ds/tokens';
+import { useColors } from '@theme/useColors';
+import { spacing } from '@ds/tokens';
 
 interface RepoDetailLayoutProps {
   children: React.ReactNode;

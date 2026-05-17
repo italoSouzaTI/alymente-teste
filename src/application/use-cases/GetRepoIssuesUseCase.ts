@@ -1,8 +1,5 @@
-import type {
-  IGitHubRepository,
-  PaginatedResult,
-} from '../../domain/repositories/IGitHubRepository';
-import type { Issue } from '../../domain/entities/Issue';
+import type { IGitHubRepository, PaginatedResult } from '@domain/repositories/IGitHubRepository';
+import type { Issue } from '@domain/entities/Issue';
 
 export interface GetRepoIssuesInput {
   owner: string;

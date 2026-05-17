@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import type { Issue } from '../../../domain/entities/Issue';
-import { useColors } from '../../theme/useColors';
-import { Avatar } from '../ds/Avatar';
-import { Text } from '../ds/Text';
-import { radii, spacing, typography } from '../ds/tokens';
+import type { Issue } from '@domain/entities/Issue';
+import { useColors } from '@theme/useColors';
+import { Avatar } from '@ds/Avatar';
+import { Text } from '@ds/Text';
+import { radii, spacing, typography } from '@ds/tokens';
 import { IssueLabelChip } from './IssueLabelChip';
 import { IssueStateIndicator } from './IssueStateIndicator';
 

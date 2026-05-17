@@ -1,8 +1,8 @@
 import React from 'react';
-import type { IssuesScreenProps } from '../../infrastructure/navigation/types';
-import { useIssuesViewModel } from '../viewmodels/useIssuesViewModel';
-import { Screen } from '../components/common/Screen';
-import { IssueList } from '../components/issues/IssueList';
+import type { IssuesScreenProps } from '@infrastructure/navigation/types';
+import { useIssuesViewModel } from '@viewmodels/useIssuesViewModel';
+import { Screen } from '@components/common/Screen';
+import { IssueList } from '@components/issues/IssueList';
 
 export function IssuesScreen({ route }: IssuesScreenProps) {
   const { owner, repo } = route.params;

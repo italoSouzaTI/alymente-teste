@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { spacing } from '../ds/tokens';
-import { Avatar } from '../ds/Avatar';
-import { Text } from '../ds/Text';
+import { spacing } from '@ds/tokens';
+import { Avatar } from '@ds/Avatar';
+import { Text } from '@ds/Text';
 import { ShowcaseSection } from './ShowcaseSection';
 
 const DEMO_URI = 'https://avatars.githubusercontent.com/u/9919?s=200&v=4';

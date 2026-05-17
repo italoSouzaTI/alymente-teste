@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import type { Repo } from '../../../domain/entities/Repo';
-import { useColors } from '../../theme/useColors';
-import { Avatar } from '../ds/Avatar';
-import { Badge } from '../ds/Badge';
-import { Text } from '../ds/Text';
-import { getLanguageColor, spacing } from '../ds/tokens';
+import type { Repo } from '@domain/entities/Repo';
+import { useColors } from '@theme/useColors';
+import { Avatar } from '@ds/Avatar';
+import { Badge } from '@ds/Badge';
+import { Text } from '@ds/Text';
+import { getLanguageColor, spacing } from '@ds/tokens';
 
 interface RepoDetailHeaderProps {
   repo: Repo;

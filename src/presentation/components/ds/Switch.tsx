@@ -8,7 +8,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useColors } from '../../theme/useColors';
+import { useColors } from '@theme/useColors';
 import { radii } from './tokens';
 
 const TRACK_WIDTH = 52;

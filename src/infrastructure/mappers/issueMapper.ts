@@ -1,6 +1,9 @@
-import type { Issue } from '../../domain/entities/Issue';
-import type { Label } from '../../domain/entities/Label';
-import type { GitHubApiIssue, GitHubApiLabel } from '../repositories/types/githubApiTypes';
+import type { Issue } from '@domain/entities/Issue';
+import type { Label } from '@domain/entities/Label';
+import type {
+  GitHubApiIssue,
+  GitHubApiLabel,
+} from '@infrastructure/repositories/types/githubApiTypes';
 import { mapOwner } from './repoMapper';
 
 function mapLabel(api: GitHubApiLabel): Label {

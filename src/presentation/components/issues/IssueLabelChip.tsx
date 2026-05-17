@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import type { Label } from '../../../domain/entities/Label';
-import { Text } from '../ds/Text';
-import { radii, spacing } from '../ds/tokens';
+import type { Label } from '@domain/entities/Label';
+import { Text } from '@ds/Text';
+import { radii, spacing } from '@ds/tokens';
 
 interface IssueLabelChipProps {
   label: Label;

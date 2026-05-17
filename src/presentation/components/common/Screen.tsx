@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
-import { useColors } from '../../theme/useColors';
+import { useColors } from '@theme/useColors';
 
 interface ScreenProps {
   children: React.ReactNode;

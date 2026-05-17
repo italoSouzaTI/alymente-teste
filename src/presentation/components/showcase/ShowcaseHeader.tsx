@@ -1,8 +1,7 @@
-import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { ThemeSwitch } from '../ds/ThemeSwitch';
-import { Text } from '../ds/Text';
-import { spacing } from '../ds/tokens';
+import { Text } from '@ds/Text';
+import { ThemeSwitch } from '@ds/ThemeSwitch';
+import { spacing } from '@ds/tokens';
 
 export function ShowcaseHeader() {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, View } from 'react-native';
-import { useColors } from '../../theme/useColors';
+import { useColors } from '@theme/useColors';
 import { Text } from './Text';
 
 type Size = 'xs' | 'sm' | 'md' | 'lg';

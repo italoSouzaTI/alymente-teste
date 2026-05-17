@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useColors } from '../../theme/useColors';
-import { radii, spacing } from '../ds/tokens';
-import { Text } from '../ds/Text';
+import { useColors } from '@theme/useColors';
+import { radii, spacing } from '@ds/tokens';
+import { Text } from '@ds/Text';
 
 interface ColorSwatchProps {
   name: string;

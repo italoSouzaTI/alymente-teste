@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import type { Repo } from '../../domain/entities/Repo';
-import { RateLimitError, NetworkError } from '../../domain/errors/GitHubErrors';
-import { searchReposUseCase } from '../../infrastructure/di/container';
+import type { Repo } from '@domain/entities/Repo';
+import { RateLimitError, NetworkError } from '@domain/errors/GitHubErrors';
+import { searchReposUseCase } from '@infrastructure/di/container';
 
 // ─── State ──────────────────────────────────────────────────────────────────
 

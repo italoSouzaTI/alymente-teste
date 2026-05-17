@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { spacing } from '../ds/tokens';
-import { LoadingSpinner } from '../common/LoadingSpinner';
-import { Text } from '../ds/Text';
+import { spacing } from '@ds/tokens';
+import { LoadingSpinner } from '@components/common/LoadingSpinner';
+import { Text } from '@ds/Text';
 
 interface RepoListFooterProps {
   isFetchingMore: boolean;

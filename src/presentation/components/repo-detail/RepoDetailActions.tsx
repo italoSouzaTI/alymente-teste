@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Bug } from 'phosphor-react-native';
-import { useColors } from '../../theme/useColors';
-import { Button } from '../ds/Button';
-import { Card } from '../ds/Card';
-import { Text } from '../ds/Text';
-import { spacing } from '../ds/tokens';
+import { BugIcon } from 'phosphor-react-native';
+import { useColors } from '@theme/useColors';
+import { Button } from '@ds/Button';
+import { Card } from '@ds/Card';
+import { Text } from '@ds/Text';
+import { spacing } from '@ds/tokens';
 
 interface RepoDetailActionsProps {
   issueCount: number;
@@ -20,7 +20,7 @@ export function RepoDetailActions({ issueCount, onViewIssues }: RepoDetailAction
       <Card onPress={issueCount > 0 ? onViewIssues : undefined} style={styles.card}>
         <View style={styles.row}>
           <View style={[styles.iconWrap, { backgroundColor: c.errorContainer }]}>
-            <Bug size={20} color={c.error} weight="fill" />
+            <BugIcon size={20} color={c.error} weight="fill" />
           </View>
           <View style={styles.info}>
             <Text variant="headlineSm">Issues abertas</Text>

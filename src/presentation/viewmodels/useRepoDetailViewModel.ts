@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
-import type { Repo } from '../../domain/entities/Repo';
-import { RateLimitError, NetworkError } from '../../domain/errors/GitHubErrors';
-import { getRepoDetailsUseCase } from '../../infrastructure/di/container';
+import type { Repo } from '@domain/entities/Repo';
+import { RateLimitError, NetworkError } from '@domain/errors/GitHubErrors';
+import { getRepoDetailsUseCase } from '@infrastructure/di/container';
 
 // ─── State ──────────────────────────────────────────────────────────────────
 

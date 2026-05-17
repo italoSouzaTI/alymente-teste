@@ -1,8 +1,8 @@
-import React from 'react';
+import { GitForkIcon, StarIcon } from 'phosphor-react-native';
 import { StyleSheet, View } from 'react-native';
-import type { Repo } from '../../../domain/entities/Repo';
-import { useColors } from '../../theme/useColors';
-import { Avatar, Badge, Card, Text, getLanguageColor, spacing, typography } from '../ds';
+import type { Repo } from '@domain/entities/Repo';
+import { useColors } from '@theme/useColors';
+import { Avatar, Badge, Card, Text, getLanguageColor, spacing, typography } from '@ds';
 
 function formatCount(n: number): string {
   if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
@@ -35,12 +35,18 @@ export function RepoCard({ repo, onPress }: RepoCardProps) {
 
       <View style={styles.meta}>
         {repo.language != null && <Badge label={repo.language} dot={langColor} variant="outline" />}
-        <Text variant="labelMd" color="muted">
-          ⭐ {formatCount(repo.stars)}
-        </Text>
-        <Text variant="labelMd" color="muted">
-          🍴 {formatCount(repo.forks)}
-        </Text>
+        <View style={styles.stat}>
+          <StarIcon size={12} color={c.onSurfaceVariant} weight="fill" />
+          <Text variant="labelMd" color="muted">
+            {formatCount(repo.stars)}
+          </Text>
+        </View>
+        <View style={styles.stat}>
+          <GitForkIcon size={12} color={c.onSurfaceVariant} weight="fill" />
+          <Text variant="labelMd" color="muted">
+            {formatCount(repo.forks)}
+          </Text>
+        </View>
         {repo.openIssuesCount > 0 && (
           <Text variant="labelMd" color="muted">
             ● {repo.openIssuesCount} issues
@@ -68,4 +74,5 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: spacing.gutterSm,
   },
+  stat: { flexDirection: 'row', alignItems: 'center', gap: spacing.gutterSm },
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useColors } from '../../theme/useColors';
-import { spacing } from '../ds/tokens';
+import { useColors } from '@theme/useColors';
+import { spacing } from '@ds/tokens';
 import { ColorSwatch } from './ColorSwatch';
 import { ShowcaseSection } from './ShowcaseSection';
 

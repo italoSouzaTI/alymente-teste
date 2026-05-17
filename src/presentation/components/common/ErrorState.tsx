@@ -1,8 +1,9 @@
-import React from 'react';
-import { StyleSheet, Text as RNText, View } from 'react-native';
-import { spacing } from '../ds/tokens';
-import { Button } from '../ds/Button';
-import { Text } from '../ds/Text';
+import { WarningIcon } from 'phosphor-react-native';
+import { StyleSheet, View } from 'react-native';
+import { useColors } from '@theme/useColors';
+import { Button } from '@ds/Button';
+import { Text } from '@ds/Text';
+import { spacing } from '@ds/tokens';
 
 interface ErrorStateProps {
   message: string;
@@ -10,16 +11,22 @@ interface ErrorStateProps {
 }
 
 export function ErrorState({ message, onRetry }: ErrorStateProps) {
+  const c = useColors();
+
   return (
     <View style={styles.wrapper}>
-      <RNText style={styles.emoji}>⚠️</RNText>
+      <WarningIcon size={40} color={c.error} weight="fill" />
       <Text variant="headlineSm" style={styles.center}>
         Algo deu errado
       </Text>
       <Text variant="bodySm" color="muted" style={styles.center}>
         {message}
       </Text>
-      {onRetry != null && <Button label="Tentar novamente" variant="secondary" onPress={onRetry} />}
+      <View style={styles.buttonContainer}>
+        {onRetry != null && (
+          <Button label="Tentar novamente" variant="secondary" onPress={onRetry} />
+        )}
+      </View>
     </View>
   );
 }
@@ -33,6 +40,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.xxl,
     paddingVertical: spacing.xxl,
   },
-  emoji: { fontSize: 40, textAlign: 'center' },
   center: { textAlign: 'center' },
+  buttonContainer: {
+    marginTop: spacing.md,
+    width: '100%',
+    alignItems: 'center',
+  },
 });

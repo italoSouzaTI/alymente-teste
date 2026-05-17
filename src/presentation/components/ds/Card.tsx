@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, View, type ViewStyle } from 'react-native';
-import { useColors } from '../../theme/useColors';
+import { useColors } from '@theme/useColors';
 import { radii, spacing } from './tokens';
 
 interface CardProps {

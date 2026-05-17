@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text as RNText, type TextProps } from 'react-native';
-import { useColors } from '../../theme/useColors';
+import { useColors } from '@theme/useColors';
 import { typography } from './tokens';
 
 type Variant = keyof typeof typography;

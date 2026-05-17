@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ShowcaseScreenProps } from '../../infrastructure/navigation/types';
+import type { ShowcaseScreenProps } from '@infrastructure/navigation/types';
 import {
   AvatarsSection,
   BadgesSection,
@@ -10,7 +10,7 @@ import {
   ShowcaseHeader,
   ShowcaseLayout,
   TypographySection,
-} from '../components/showcase';
+} from '@components/showcase';
 
 export function ShowcaseScreen(_: ShowcaseScreenProps) {
   return (

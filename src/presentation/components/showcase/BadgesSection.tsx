@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { languageColors, spacing } from '../ds/tokens';
-import { Badge } from '../ds/Badge';
+import { languageColors, spacing } from '@ds/tokens';
+import { Badge } from '@ds/Badge';
 import { ShowcaseSection } from './ShowcaseSection';
 
 export function BadgesSection() {

@@ -1,14 +1,11 @@
 import React, { useCallback } from 'react';
-import type {
-  ExploreNavigationProp,
-  SearchScreenProps,
-} from '../../infrastructure/navigation/types';
+import type { ExploreNavigationProp, SearchScreenProps } from '@infrastructure/navigation/types';
 import { useNavigation } from '@react-navigation/native';
-import type { Repo } from '../../domain/entities/Repo';
-import { useSearchViewModel } from '../viewmodels/useSearchViewModel';
-import { Screen } from '../components/common/Screen';
-import { SearchBar } from '../components/search/SearchBar';
-import { RepoList } from '../components/search/RepoList';
+import type { Repo } from '@domain/entities/Repo';
+import { useSearchViewModel } from '@viewmodels/useSearchViewModel';
+import { Screen } from '@components/common/Screen';
+import { SearchBar } from '@components/search/SearchBar';
+import { RepoList } from '@components/search/RepoList';
 
 export function SearchScreen(_props: SearchScreenProps) {
   const [state, actions] = useSearchViewModel();

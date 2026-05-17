@@ -1,8 +1,8 @@
 import React from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
-import { spacing } from '../ds/tokens';
-import { Card } from '../ds/Card';
-import { Text } from '../ds/Text';
+import { spacing } from '@ds/tokens';
+import { Card } from '@ds/Card';
+import { Text } from '@ds/Text';
 import { ShowcaseSection } from './ShowcaseSection';
 
 export function CardsSection() {

@@ -1,14 +1,15 @@
-import React, { useCallback } from 'react';
+import { MagnifyingGlassIcon, TrayIcon } from 'phosphor-react-native';
+import { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FlashList, type ListRenderItemInfo } from '@shopify/flash-list';
-import type { Repo } from '../../../domain/entities/Repo';
-import type { SearchViewState, SearchViewActions } from '../../viewmodels/useSearchViewModel';
-import { useColors } from '../../theme/useColors';
-import { spacing } from '../ds/tokens';
-import { RepoCard } from '../repo/RepoCard';
-import { EmptyState } from '../common/EmptyState';
-import { ErrorState } from '../common/ErrorState';
-import { LoadingSpinner } from '../common/LoadingSpinner';
+import type { Repo } from '@domain/entities/Repo';
+import type { SearchViewState, SearchViewActions } from '@viewmodels/useSearchViewModel';
+import { useColors } from '@theme/useColors';
+import { spacing } from '@ds/tokens';
+import { RepoCard } from '@components/repo/RepoCard';
+import { EmptyState } from '@components/common/EmptyState';
+import { ErrorState } from '@components/common/ErrorState';
+import { LoadingSpinner } from '@components/common/LoadingSpinner';
 import { SearchResultsHeader } from './SearchResultsHeader';
 import { RepoListFooter } from './RepoListFooter';
 
@@ -43,7 +44,7 @@ export function RepoList({ state, actions, onRepoPress }: RepoListProps) {
   if (state.query.trim().length === 0) {
     return (
       <EmptyState
-        emoji="🔍"
+        icon={MagnifyingGlassIcon}
         title="Encontre repositórios"
         description="Digite o nome de um repositório ou organização para começar."
       />
@@ -53,7 +54,7 @@ export function RepoList({ state, actions, onRepoPress }: RepoListProps) {
   if (state.repos.length === 0) {
     return (
       <EmptyState
-        emoji="📭"
+        icon={TrayIcon}
         title="Nenhum resultado"
         description={`Não encontramos repositórios para "${state.query}".`}
       />

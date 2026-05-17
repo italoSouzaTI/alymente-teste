@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Pressable } from 'react-native';
-import { MagnifyingGlass, XCircle } from 'phosphor-react-native';
-import { useColors } from '../../theme/useColors';
-import { spacing } from '../ds/tokens';
-import { Input } from '../ds/Input';
+import { MagnifyingGlassIcon, XCircleIcon } from 'phosphor-react-native';
+import { useColors } from '@theme/useColors';
+import { spacing } from '@ds/tokens';
+import { Input } from '@ds/Input';
 import { ShowcaseSection } from './ShowcaseSection';
 
 export function InputsSection() {
@@ -18,11 +18,11 @@ export function InputsSection() {
           placeholder="Buscar repositório..."
           value={query}
           onChangeText={setQuery}
-          leftIcon={<MagnifyingGlass size={18} color={c.outline} />}
+          leftIcon={<MagnifyingGlassIcon size={18} color={c.outline} />}
           rightIcon={
             query.length > 0 ? (
               <Pressable onPress={() => setQuery('')} hitSlop={8}>
-                <XCircle size={18} color={c.outline} weight="fill" />
+                <XCircleIcon size={18} color={c.outline} weight="fill" />
               </Pressable>
             ) : undefined
           }

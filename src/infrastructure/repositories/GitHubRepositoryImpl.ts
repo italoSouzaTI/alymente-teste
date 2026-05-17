@@ -1,14 +1,11 @@
 import { isAxiosError } from 'axios';
-import type {
-  IGitHubRepository,
-  PaginatedResult,
-} from '../../domain/repositories/IGitHubRepository';
-import type { Repo } from '../../domain/entities/Repo';
-import type { Issue } from '../../domain/entities/Issue';
-import { RateLimitError, NetworkError, UnknownApiError } from '../../domain/errors/GitHubErrors';
-import { httpClient } from '../http/httpClient';
-import { mapRepo } from '../mappers/repoMapper';
-import { mapIssue } from '../mappers/issueMapper';
+import type { IGitHubRepository, PaginatedResult } from '@domain/repositories/IGitHubRepository';
+import type { Repo } from '@domain/entities/Repo';
+import type { Issue } from '@domain/entities/Issue';
+import { RateLimitError, NetworkError, UnknownApiError } from '@domain/errors/GitHubErrors';
+import { httpClient } from '@infrastructure/http/httpClient';
+import { mapRepo } from '@infrastructure/mappers/repoMapper';
+import { mapIssue } from '@infrastructure/mappers/issueMapper';
 import type { GitHubSearchResponse, GitHubApiRepo, GitHubApiIssue } from './types/githubApiTypes';
 
 const PER_PAGE = 20;

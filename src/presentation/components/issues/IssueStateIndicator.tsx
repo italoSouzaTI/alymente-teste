@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { GitPullRequest, XCircle } from 'phosphor-react-native';
-import { useColors } from '../../theme/useColors';
-import { radii, spacing } from '../ds/tokens';
+import { GitPullRequestIcon, XCircleIcon } from 'phosphor-react-native';
+import { useColors } from '@theme/useColors';
+import { radii, spacing } from '@ds/tokens';
 
 interface IssueStateIndicatorProps {
   state: 'open' | 'closed';
@@ -22,9 +22,9 @@ export function IssueStateIndicator({ state }: IssueStateIndicatorProps) {
       ]}
     >
       {isOpen ? (
-        <GitPullRequest size={14} color={isOpen ? c.success : c.error} weight="bold" />
+        <GitPullRequestIcon size={14} color={isOpen ? c.success : c.error} weight="bold" />
       ) : (
-        <XCircle size={14} color={c.error} weight="bold" />
+        <XCircleIcon size={14} color={c.error} weight="bold" />
       )}
     </View>
   );

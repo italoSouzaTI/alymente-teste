@@ -40,6 +40,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@types/react": "~19.2.2",
+    "babel-plugin-module-resolver": "^5.0.3",
     "eslint": "^9.28.0",
     "eslint-config-expo": "^56.0.4",
     "eslint-config-prettier": "^10.1.5",

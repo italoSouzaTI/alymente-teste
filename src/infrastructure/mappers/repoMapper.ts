@@ -1,6 +1,9 @@
-import type { Repo } from '../../domain/entities/Repo';
-import type { Owner } from '../../domain/entities/Owner';
-import type { GitHubApiRepo, GitHubApiOwner } from '../repositories/types/githubApiTypes';
+import type { Repo } from '@domain/entities/Repo';
+import type { Owner } from '@domain/entities/Owner';
+import type {
+  GitHubApiRepo,
+  GitHubApiOwner,
+} from '@infrastructure/repositories/types/githubApiTypes';
 
 export function mapOwner(api: GitHubApiOwner): Owner {
   return {

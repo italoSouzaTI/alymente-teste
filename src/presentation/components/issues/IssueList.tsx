@@ -1,13 +1,14 @@
-import React, { useCallback } from 'react';
+import { CheckCircleIcon } from 'phosphor-react-native';
+import { useCallback } from 'react';
 import { View } from 'react-native';
 import { FlashList, type ListRenderItemInfo } from '@shopify/flash-list';
-import type { Issue } from '../../../domain/entities/Issue';
-import type { IssuesViewState, IssuesViewActions } from '../../viewmodels/useIssuesViewModel';
-import { useColors } from '../../theme/useColors';
-import { EmptyState } from '../common/EmptyState';
-import { ErrorState } from '../common/ErrorState';
-import { LoadingSpinner } from '../common/LoadingSpinner';
-import { RepoListFooter } from '../search/RepoListFooter';
+import type { Issue } from '@domain/entities/Issue';
+import type { IssuesViewState, IssuesViewActions } from '@viewmodels/useIssuesViewModel';
+import { useColors } from '@theme/useColors';
+import { EmptyState } from '@components/common/EmptyState';
+import { ErrorState } from '@components/common/ErrorState';
+import { LoadingSpinner } from '@components/common/LoadingSpinner';
+import { RepoListFooter } from '@components/search/RepoListFooter';
 import { IssueItem } from './IssueItem';
 
 interface IssueListProps {
@@ -36,7 +37,7 @@ export function IssueList({ state, actions }: IssueListProps) {
   if (state.issues.length === 0) {
     return (
       <EmptyState
-        emoji="✅"
+        icon={CheckCircleIcon}
         title="Sem issues abertas"
         description="Este repositório não tem issues abertas no momento."
       />

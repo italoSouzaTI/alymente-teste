@@ -1,15 +1,14 @@
-import React from 'react';
+import { MagnifyingGlassIcon, PaintBrushIcon } from 'phosphor-react-native';
 import { DarkTheme, DefaultTheme, NavigationContainer, type Theme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MagnifyingGlass, PaintBrush } from 'phosphor-react-native';
 import type { ExploreStackParamList, RootTabParamList } from './types';
-import { SearchScreen } from '../../presentation/screens/SearchScreen';
-import { RepoDetailScreen } from '../../presentation/screens/RepoDetailScreen';
-import { IssuesScreen } from '../../presentation/screens/IssuesScreen';
-import { ShowcaseScreen } from '../../presentation/screens/ShowcaseScreen';
-import { useThemeMode } from '../../presentation/theme/ThemeModeContext';
-import { darkColors, lightColors } from '../../presentation/components/ds/tokens';
+import { SearchScreen } from '@screens/SearchScreen';
+import { RepoDetailScreen } from '@screens/RepoDetailScreen';
+import { IssuesScreen } from '@screens/IssuesScreen';
+import { ShowcaseScreen } from '@screens/ShowcaseScreen';
+import { useThemeMode } from '@theme/ThemeModeContext';
+import { darkColors, lightColors } from '@ds/tokens';
 
 const ExploreStack = createNativeStackNavigator<ExploreStackParamList>();
 const RootTab = createBottomTabNavigator<RootTabParamList>();
@@ -85,7 +84,7 @@ export function RootNavigator() {
           options={{
             title: 'Explorar',
             tabBarIcon: ({ color, size }) => (
-              <MagnifyingGlass size={size} color={color} weight="regular" />
+              <MagnifyingGlassIcon size={size} color={color} weight="regular" />
             ),
           }}
         />
@@ -96,7 +95,7 @@ export function RootNavigator() {
             title: 'Design System',
             headerShown: false,
             tabBarIcon: ({ color, size }) => (
-              <PaintBrush size={size} color={color} weight="regular" />
+              <PaintBrushIcon size={size} color={color} weight="regular" />
             ),
           }}
         />

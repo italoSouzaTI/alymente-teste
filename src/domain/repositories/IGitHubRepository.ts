@@ -1,5 +1,5 @@
-import type { Repo } from '../entities/Repo';
-import type { Issue } from '../entities/Issue';
+import type { Repo } from '@domain/entities/Repo';
+import type { Issue } from '@domain/entities/Issue';
 
 export interface PaginatedResult<T> {
   items: T[];

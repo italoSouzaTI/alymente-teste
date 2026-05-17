@@ -1,11 +1,11 @@
-import React from 'react';
-import { StyleSheet, Text as RNText, View } from 'react-native';
-import { useColors } from '../../theme/useColors';
-import { Text } from '../ds/Text';
-import { radii, spacing } from '../ds/tokens';
+import type { Icon } from 'phosphor-react-native';
+import { StyleSheet, View } from 'react-native';
+import { useColors } from '@theme/useColors';
+import { Text } from '@ds/Text';
+import { radii, spacing } from '@ds/tokens';
 
 interface StatCardProps {
-  icon: string;
+  icon: Icon;
   value: number;
   label: string;
 }
@@ -16,14 +16,14 @@ function formatCount(n: number): string {
   return String(n);
 }
 
-export function StatCard({ icon, value, label }: StatCardProps) {
+export function StatCard({ icon: IconComponent, value, label }: StatCardProps) {
   const c = useColors();
 
   return (
     <View
       style={[styles.card, { backgroundColor: c.surfaceContainer, borderColor: c.outlineVariant }]}
     >
-      <RNText style={styles.icon}>{icon}</RNText>
+      <IconComponent size={20} color={c.onSurface} weight="fill" />
       <Text variant="headlineMd" style={{ color: c.onSurface }}>
         {formatCount(value)}
       </Text>
@@ -45,5 +45,4 @@ const styles = StyleSheet.create({
     gap: spacing.gutterSm,
     minWidth: 72,
   },
-  icon: { fontSize: 20 },
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { spacing } from '../ds/tokens';
-import { Text } from '../ds/Text';
+import { spacing } from '@ds/tokens';
+import { Text } from '@ds/Text';
 
 interface SearchResultsHeaderProps {
   totalCount: number;

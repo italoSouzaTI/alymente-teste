@@ -1,5 +1,5 @@
-import type { IGitHubRepository } from '../../domain/repositories/IGitHubRepository';
-import type { Repo } from '../../domain/entities/Repo';
+import type { IGitHubRepository } from '@domain/repositories/IGitHubRepository';
+import type { Repo } from '@domain/entities/Repo';
 
 export interface GetRepoDetailsInput {
   owner: string;

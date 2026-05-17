@@ -4,16 +4,9 @@ import { renderHookWithProviders } from '../../../test-utils/renderWithProviders
 import { makeRepo } from '../../../test-utils/fixtures';
 import { NetworkError } from '@domain/errors/GitHubErrors';
 
-jest.mock('@infrastructure/di/container', () => ({
-  searchReposUseCase: { execute: jest.fn() },
-  getRepoDetailsUseCase: { execute: jest.fn() },
-  getRepoIssuesUseCase: { execute: jest.fn() },
-}));
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { getRepoDetailsUseCase } = require('@infrastructure/di/container') as {
-  getRepoDetailsUseCase: { execute: jest.Mock };
-};
+function makeDetailsUseCase(impl?: jest.Mock) {
+  return { execute: impl ?? jest.fn() } as never;
+}
 
 describe('useRepoDetailViewModel', () => {
   beforeEach(() => {
@@ -21,9 +14,11 @@ describe('useRepoDetailViewModel', () => {
   });
 
   it('has correct initial state', () => {
-    getRepoDetailsUseCase.execute.mockResolvedValue(makeRepo());
-
-    const { result } = renderHookWithProviders(() => useRepoDetailViewModel('facebook', 'react'));
+    const { result } = renderHookWithProviders(() => useRepoDetailViewModel('facebook', 'react'), {
+      useCases: {
+        getRepoDetailsUseCase: makeDetailsUseCase(jest.fn().mockResolvedValue(makeRepo())),
+      },
+    });
     const [state] = result.current;
 
     expect(state.repo).toBeNull();
@@ -32,9 +27,11 @@ describe('useRepoDetailViewModel', () => {
 
   it('sets repo after successful execute', async () => {
     const repo = makeRepo({ fullName: 'facebook/react' });
-    getRepoDetailsUseCase.execute.mockResolvedValue(repo);
+    const execute = jest.fn().mockResolvedValue(repo);
 
-    const { result } = renderHookWithProviders(() => useRepoDetailViewModel('facebook', 'react'));
+    const { result } = renderHookWithProviders(() => useRepoDetailViewModel('facebook', 'react'), {
+      useCases: { getRepoDetailsUseCase: makeDetailsUseCase(execute) },
+    });
 
     await act(async () => {
       await new Promise((r) => setTimeout(r, 50));
@@ -45,24 +42,25 @@ describe('useRepoDetailViewModel', () => {
   });
 
   it('calls execute with correct params', async () => {
-    getRepoDetailsUseCase.execute.mockResolvedValue(makeRepo());
+    const execute = jest.fn().mockResolvedValue(makeRepo());
 
-    renderHookWithProviders(() => useRepoDetailViewModel('torvalds', 'linux'));
+    renderHookWithProviders(() => useRepoDetailViewModel('torvalds', 'linux'), {
+      useCases: { getRepoDetailsUseCase: makeDetailsUseCase(execute) },
+    });
 
     await act(async () => {
       await new Promise((r) => setTimeout(r, 50));
     });
 
-    expect(getRepoDetailsUseCase.execute).toHaveBeenCalledWith({
-      owner: 'torvalds',
-      repo: 'linux',
-    });
+    expect(execute).toHaveBeenCalledWith({ owner: 'torvalds', repo: 'linux' });
   });
 
   it('sets error message on rejected execute', async () => {
-    getRepoDetailsUseCase.execute.mockRejectedValue(new NetworkError());
+    const execute = jest.fn().mockRejectedValue(new NetworkError());
 
-    const { result } = renderHookWithProviders(() => useRepoDetailViewModel('facebook', 'react'));
+    const { result } = renderHookWithProviders(() => useRepoDetailViewModel('facebook', 'react'), {
+      useCases: { getRepoDetailsUseCase: makeDetailsUseCase(execute) },
+    });
 
     await act(async () => {
       await new Promise((r) => setTimeout(r, 50));
@@ -73,22 +71,28 @@ describe('useRepoDetailViewModel', () => {
   });
 
   it('does not fetch when owner or repo is empty', () => {
-    const { result } = renderHookWithProviders(() => useRepoDetailViewModel('', ''));
+    const execute = jest.fn();
+
+    const { result } = renderHookWithProviders(() => useRepoDetailViewModel('', ''), {
+      useCases: { getRepoDetailsUseCase: makeDetailsUseCase(execute) },
+    });
     const [state] = result.current;
 
     expect(state.repo).toBeNull();
-    expect(getRepoDetailsUseCase.execute).not.toHaveBeenCalled();
+    expect(execute).not.toHaveBeenCalled();
   });
 
   it('exposes retry action', async () => {
-    getRepoDetailsUseCase.execute.mockResolvedValue(makeRepo());
+    const execute = jest.fn().mockResolvedValue(makeRepo());
 
-    const { result } = renderHookWithProviders(() => useRepoDetailViewModel('facebook', 'react'));
+    const { result } = renderHookWithProviders(() => useRepoDetailViewModel('facebook', 'react'), {
+      useCases: { getRepoDetailsUseCase: makeDetailsUseCase(execute) },
+    });
 
     await act(async () => {
       result.current[1].retry();
     });
 
-    expect(getRepoDetailsUseCase.execute).toHaveBeenCalled();
+    expect(execute).toHaveBeenCalled();
   });
 });

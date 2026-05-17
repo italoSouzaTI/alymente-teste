@@ -1,16 +1,13 @@
 import React, { useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import type {
-  RepoDetailScreenProps,
-  ExploreNavigationProp,
-} from '@infrastructure/navigation/types';
+import type { RepoDetailScreenProps, ExploreNavigationProp } from '@presentation/navigation/types';
 import { useRepoDetailViewModel } from '@viewmodels/useRepoDetailViewModel';
 import { ErrorState } from '@components/common/ErrorState';
-import { LoadingSpinner } from '@components/common/LoadingSpinner';
 import {
   RepoDetailActions,
   RepoDetailHeader,
   RepoDetailLayout,
+  RepoDetailSkeleton,
   RepoDetailStats,
 } from '@components/repo-detail';
 
@@ -24,7 +21,11 @@ export function RepoDetailScreen({ route }: RepoDetailScreenProps) {
   }, [navigation, owner, repo, repoName]);
 
   if (state.isLoading) {
-    return <LoadingSpinner fullScreen />;
+    return (
+      <RepoDetailLayout>
+        <RepoDetailSkeleton />
+      </RepoDetailLayout>
+    );
   }
 
   if (state.error != null || state.repo == null) {

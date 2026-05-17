@@ -7,7 +7,7 @@ import type { IssuesViewState, IssuesViewActions } from '@viewmodels/useIssuesVi
 import { useColors } from '@theme/useColors';
 import { EmptyState } from '@components/common/EmptyState';
 import { ErrorState } from '@components/common/ErrorState';
-import { LoadingSpinner } from '@components/common/LoadingSpinner';
+import { IssueListSkeleton } from './IssueListSkeleton';
 import { RepoListFooter } from '@components/search/RepoListFooter';
 import { IssueItem } from './IssueItem';
 
@@ -27,7 +27,7 @@ export function IssueList({ state, actions }: IssueListProps) {
   const keyExtractor = useCallback((item: Issue) => String(item.id), []);
 
   if (state.isLoading) {
-    return <LoadingSpinner fullScreen />;
+    return <IssueListSkeleton />;
   }
 
   if (state.error != null) {

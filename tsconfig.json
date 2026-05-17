@@ -13,7 +13,8 @@
       "@components/*": ["src/presentation/components/*"],
       "@screens/*": ["src/presentation/screens/*"],
       "@theme/*": ["src/presentation/theme/*"],
-      "@viewmodels/*": ["src/presentation/viewmodels/*"]
+      "@viewmodels/*": ["src/presentation/viewmodels/*"],
+      "@hooks/*": ["src/presentation/hooks/*"]
     }
   }
 }

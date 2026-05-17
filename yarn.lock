@@ -1690,6 +1690,18 @@
   resolved "https://registry.npmjs.org/@pkgr/core/-/core-0.2.9.tgz"
   integrity sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==
 
+"@react-native-async-storage/async-storage@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-3.0.2.tgz#caf2d0d7038dc2b8a2a48971bdbd047db0a2ac86"
+  integrity sha512-XP0zDIl+1XoeuQ7f878qXKdl77zLwzLALPpxvNRc7ZtDh9ew36WSvOdQOhFkexMySapFAWxEbZxS8K8J2DU4eg==
+  dependencies:
+    idb "8.0.3"
+
+"@react-native-community/netinfo@11.5.2":
+  version "11.5.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-11.5.2.tgz#daf3bc1b5cf6e9fc6725600c9e95875b5e50e694"
+  integrity sha512-/g0m65BtX9HU+bPiCH2517bOHpEIUsGrWFXDzi1a5nNKn5KujQgm04WhL7/OSXWKHyrT8VVtUoJA0XKRxueBpQ==
+
 "@react-native/assets-registry@0.83.6":
   version "0.83.6"
   resolved "https://registry.npmjs.org/@react-native/assets-registry/-/assets-registry-0.83.6.tgz"
@@ -1933,10 +1945,32 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
+"@tanstack/query-async-storage-persister@^5.100.10":
+  version "5.100.10"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-async-storage-persister/-/query-async-storage-persister-5.100.10.tgz#0b7aee8ddf4af07712abaf046157b08874674cae"
+  integrity sha512-NbxsCI9qyMbEooFnFsAR2dbVQ6cmxZpOWSjLFy62qfMkxXnNjkskqex7YgtzWSaD/ozOOLgrbDiyYWEPYKmMyQ==
+  dependencies:
+    "@tanstack/query-core" "5.100.10"
+    "@tanstack/query-persist-client-core" "5.100.10"
+
 "@tanstack/query-core@5.100.10":
   version "5.100.10"
   resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.100.10.tgz"
   integrity sha512-8UR0yJR+GiQ40m3lPhUr0xbfAupe6GSQiksSBSa9SM2NjezFyxXCIA69/lz8cSoNKZLrw1/PktIyQBJcVeMi3w==
+
+"@tanstack/query-persist-client-core@5.100.10":
+  version "5.100.10"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-persist-client-core/-/query-persist-client-core-5.100.10.tgz#efe9ea2b7cea90330129afdf7393f09fd06ad358"
+  integrity sha512-O9Pey40DhTTDBABS0bHr+KNL5/VMf6PrqjexS8WoDDtnkaoWM+y0MSe0V9E5W+BwvkjM33mB3aYcCxa175gZTQ==
+  dependencies:
+    "@tanstack/query-core" "5.100.10"
+
+"@tanstack/react-query-persist-client@^5.100.10":
+  version "5.100.10"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query-persist-client/-/react-query-persist-client-5.100.10.tgz#cbdb0329b5f10aff5245ebdd88dab48b1975e290"
+  integrity sha512-EImacngLXYEtzlrIPf8IAqKN3foS7cmSj4GWqsHJvc7K+8fy2c3s7mdV8oTJeii/TvrzO4X9fcnXi6tUHMIOHA==
+  dependencies:
+    "@tanstack/query-persist-client-core" "5.100.10"
 
 "@tanstack/react-query@^5.100.10":
   version "5.100.10"
@@ -4678,6 +4712,11 @@ iconv-lite@0.6.3:
   integrity sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==
   dependencies:
     safer-buffer ">= 2.1.2 < 3.0.0"
+
+idb@8.0.3:
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/idb/-/idb-8.0.3.tgz#c91e558f15a8d53f1d7f53a094d226fc3ad71fd9"
+  integrity sha512-LtwtVyVYO5BqRvcsKuB2iUMnHwPVByPCXFXOpuU96IZPPoPN6xjOGxZQ74pgSVVLQWtUOYgyeL4GE98BY5D3wg==
 
 ignore@^5.2.0, ignore@^5.3.1:
   version "5.3.2"

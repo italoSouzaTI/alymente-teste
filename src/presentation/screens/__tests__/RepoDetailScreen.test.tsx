@@ -57,16 +57,16 @@ describe('RepoDetailScreen', () => {
     jest.clearAllMocks();
   });
 
-  it('renders loading spinner when isLoading is true', () => {
+  it('renders skeleton when isLoading is true', () => {
     const state: RepoDetailViewState = { repo: null, isLoading: true, error: null };
     useRepoDetailViewModel.mockReturnValue([state, mockActions]);
 
-    expect(() =>
-      renderWithProviders(
-        <RepoDetailScreen route={mockRoute as never} navigation={mockNavigation as never} />,
-        { withNavigation: true },
-      ),
-    ).not.toThrow();
+    const { getByTestId } = renderWithProviders(
+      <RepoDetailScreen route={mockRoute as never} navigation={mockNavigation as never} />,
+      { withNavigation: true },
+    );
+
+    expect(getByTestId('repo-detail-skeleton')).toBeTruthy();
   });
 
   it('renders error state when error is present', () => {

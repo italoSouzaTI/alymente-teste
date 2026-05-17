@@ -1,0 +1,8 @@
+# Linguist — não contar arquivos de config JS nas estatísticas de linguagem
+babel.config.js    linguist-language=TypeScript
+commitlint.config.js linguist-language=TypeScript
+jest.config.js     linguist-language=TypeScript
+metro.config.js    linguist-language=TypeScript
+
+# Arquivos gerados — excluídos do cálculo de linguagem
+coverage/          linguist-generated=true

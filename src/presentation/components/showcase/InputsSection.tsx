@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Pressable } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { MagnifyingGlassIcon, XCircleIcon } from 'phosphor-react-native';
-import { useColors } from '@theme/useColors';
-import { spacing } from '@ds/tokens';
-import { Input } from '@ds/Input';
+import { useColors } from '../../theme/useColors';
+import { spacing } from '../ds/tokens';
+import { Input } from '../ds/Input';
 import { ShowcaseSection } from './ShowcaseSection';
 
 export function InputsSection() {

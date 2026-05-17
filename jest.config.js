@@ -16,6 +16,7 @@ module.exports = {
     '^@screens/(.*)$': '<rootDir>/src/presentation/screens/$1',
     '^@theme/(.*)$': '<rootDir>/src/presentation/theme/$1',
     '^@viewmodels/(.*)$': '<rootDir>/src/presentation/viewmodels/$1',
+    '^@hooks/(.*)$': '<rootDir>/src/presentation/hooks/$1',
   },
   transformIgnorePatterns: [
     'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|phosphor-react-native|@shopify/flash-list|react-native-reanimated|react-native-safe-area-context|react-native-screens|react-native-worklets)',

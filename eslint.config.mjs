@@ -72,6 +72,14 @@ export default [
   // ─── Regras globais (todo o src/) ───────────────────────────────────────
   {
     files: ['src/**/*.{ts,tsx}'],
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json',
+        },
+      },
+    },
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/consistent-type-imports': [

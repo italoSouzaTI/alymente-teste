@@ -18,6 +18,7 @@ module.exports = function (api) {
             '@screens': './src/presentation/screens',
             '@theme': './src/presentation/theme',
             '@viewmodels': './src/presentation/viewmodels',
+            '@hooks': './src/presentation/hooks',
           },
         },
       ],

@@ -213,6 +213,14 @@ export default [
     },
   },
 
+  // jest.setup.ts: require() dentro de jest.mock() é obrigatório (factory isolada)
+  {
+    files: ['jest.setup.ts'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+
   // ─── Testes: relaxar restrições de cross-layer (fakes, factories) ────────
   {
     files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}', '**/__tests__/**/*.{ts,tsx}'],

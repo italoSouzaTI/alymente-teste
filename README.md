@@ -164,28 +164,18 @@ Estratégia:
 
 ---
 
+## Documentação
+
+- [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) — padrões de código, lint, formatação e Conventional Commits.
+- [`docs/HISTORICO_AGENTES.md`](docs/HISTORICO_AGENTES.md) — histórico de pedidos e resoluções por área de agente, e declaração completa de uso de IA.
+
+---
+
 ## Uso de IA
 
-Este projeto utilizou ferramentas de IA (Claude Code / Claude Sonnet) como auxílio no desenvolvimento. Em conformidade com a política do teste técnico, segue a declaração de uso:
+Este projeto utilizou ferramentas de IA (Claude Code / Claude Sonnet 4.6) como auxílio no desenvolvimento. A declaração completa — prompts utilizados, o que foi gerado, o que foi corrigido pela IA e o que ficou fora de escopo — está em [`docs/HISTORICO_AGENTES.md#11-declaração-de-uso-de-ia`](docs/HISTORICO_AGENTES.md#11-declaração-de-uso-de-ia).
 
-### O que foi gerado ou fortemente assistido por IA
-
-<!-- TODO: preencher ao longo do desenvolvimento. Exemplo:
-- Scaffolding inicial dos arquivos de agentes especializados e README
-- Estrutura de tipos das entidades de domínio (Repo, Issue, Owner)
-- Configuração do QueryClient e hooks de useInfiniteQuery
--->
-
-### Prompts / instruções utilizados
-
-<!-- TODO: documentar os prompts principais ao longo do desenvolvimento. -->
-
-### O que foi modificado, revisado ou rejeitado
-
-<!-- TODO: registrar decisões críticas onde o output da IA foi ajustado. Exemplo:
-- Rejeitei sugestão de usar `any` no mapper — substituí por tipos explícitos da API do GitHub.
-- Ajustei a estrutura de DI sugerida — a IA propôs um container complexo; simplifiquei para factory functions dado o escopo do teste.
--->
+**Resumo:** toda a estrutura de camadas, tipos, configuração de ferramentas e stubs de tela foram gerados/assistidos pela IA. Sem `any` em nenhum arquivo. Decisões arquiteturais (DI simplificada, MVVM sobre Clean Architecture) foram validadas pelo desenvolvedor e não apenas aceitas automaticamente.
 
 ---
 

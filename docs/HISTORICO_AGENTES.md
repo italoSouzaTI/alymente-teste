@@ -21,6 +21,13 @@
 13. [Dark mode — propagação para navegação e status bar](#13-dark-mode--propagação-para-navegação-e-status-bar)
 14. [Telas completas — Search, RepoDetail, Issues](#14-telas-completas--search-repodetail-issues)
 15. [Declaração de uso de IA](#15-declaração-de-uso-de-ia)
+16. [Correção de imports e path aliases](#16-correção-de-imports-e-path-aliases)
+17. [Testing — configuração completa e suíte de testes](#17-testing--configuração-completa-e-suíte-de-testes)
+18. [Gitattributes e remoção de coverage do versionamento](#18-gitattributes-e-remoção-de-coverage-do-versionamento)
+19. [Persistência offline e detecção de rede](#19-persistência-offline-e-detecção-de-rede)
+20. [UseCasesContext e ExploreNavigator — separação de responsabilidades](#20-usecasescontext-e-explorenavigator--separação-de-responsabilidades)
+21. [Skeletons, RecentSearches e melhorias de UX](#21-skeletons-recentsearches-e-melhorias-de-ux)
+22. [Atualização final da documentação](#22-atualização-final-da-documentação)
 
 ---
 
@@ -199,11 +206,11 @@
 
 **Comando relacionado:** setup geral da arquitetura.
 
-**Status atual:**
+**Status nesta sessão:**
 
-- Scripts `test`, `test:watch`, `test:coverage` registrados no `package.json`.
-- `jest-expo` preset, `@testing-library/react-native` e arquivo de setup **não instalados/configurados** nesta sessão.
-- Estratégia planejada: use cases testados com `FakeGitHubRepository` (implementa `IGitHubRepository`) em Node puro; smoke tests de componentes com RNTL.
+- Scripts `test`, `test:watch`, `test:coverage` planejados no `package.json`.
+- Jest, RNTL e utilitários de teste instalados e configurados na **sessão 3** — ver [seção 17](#17-testing--configuração-completa-e-suíte-de-testes).
+- Estratégia final: use cases testados com `FakeGitHubRepository` em Node puro; smoke tests de componentes DS, telas e ViewModels com RNTL; hooks com `renderHook`.
 
 ---
 
@@ -279,7 +286,7 @@ Verificado com `claude mcp list` (stitch aparece na lista de servidores).
 
 **Comando relacionado:** implementação da arquitetura base.
 
-**Arquivos criados / modificados:**
+**Arquivos criados / modificados (versão inicial):**
 
 | Arquivo                                       | Responsabilidade                                                                            |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------- |
@@ -287,6 +294,8 @@ Verificado com `claude mcp list` (stitch aparece na lista de servidores).
 | `src/presentation/providers/AppProviders.tsx` | `QueryClientProvider` + `ThemeProvider` (light/dark) + `SafeAreaProvider` + `RootNavigator` |
 | `.env.example`                                | Placeholder `EXPO_PUBLIC_GITHUB_TOKEN=` para orientar setup do desenvolvedor                |
 | `.gitignore`                                  | `.env` e `.env.local` adicionados explicitamente                                            |
+
+> **Atualização (sessão 3):** `AppProviders` foi expandido significativamente — ver [seção 19](#19-persistência-offline-e-detecção-de-rede) e [seção 20](#20-usecasescontext-e-explorenavigator--separação-de-responsabilidades). Hoje usa `PersistQueryClientProvider`, `UseCasesProvider`, `ErrorBoundary`, `OfflineBanner` e dispara `setupOnlineManager()` no boot.
 
 ---
 
@@ -501,7 +510,7 @@ O `NavigationContainer` não recebia a prop `theme`, então React Navigation usa
 
 ## 15. Declaração de uso de IA
 
-**Modelo:** Claude Code (Claude Sonnet 4.6) via CLI da Anthropic.
+**Modelo:** Claude Code (Claude Sonnet 4.6 / Opus 4.7) via CLI da Anthropic.
 
 ### Prompts utilizados (ordem cronológica)
 
@@ -516,12 +525,35 @@ O `NavigationContainer` não recebia a prop `theme`, então React Navigation usa
 7. Implementar a arquitetura base do app no padrão MVVM.
 8. Criar este arquivo de histórico de comandos e resoluções por agente.
 
-**Sessão 2:** 9. Acessar projeto Stitch `projects/1788894762598779937` e listar telas. 10. Gerar todos os componentes do projeto (Design System completo + tokens). 11. Criar tela de Design System com toggle de dark mode animado. 12. Propagar dark mode para a navegação e status bar. 13. Criar tela de pesquisa (SearchScreen completa com FlashList + estados). 14. Adicionar ícones na bottom navigation. 15. Criar tela de detalhe do repositório (RepoDetailScreen). 16. Criar tela de issues (IssuesScreen). 17. Corrigir SearchBar cortado no Android (`contentStyle` + `flex: 1` no Input). 18. Corrigir emojis tintados no Android (`Text` nativo para emojis). 19. Atualizar este arquivo de histórico.
+**Sessão 2:**
+
+9. Acessar projeto Stitch `projects/1788894762598779937` e listar telas.
+10. Gerar todos os componentes do projeto (Design System completo + tokens).
+11. Criar tela de Design System com toggle de dark mode animado.
+12. Propagar dark mode para a navegação e status bar.
+13. Criar tela de pesquisa (SearchScreen completa com FlashList + estados).
+14. Adicionar ícones na bottom navigation.
+15. Criar tela de detalhe do repositório (RepoDetailScreen).
+16. Criar tela de issues (IssuesScreen).
+17. Corrigir SearchBar cortado no Android (`contentStyle` + `flex: 1` no Input).
+18. Corrigir emojis tintados no Android (`Text` nativo para emojis).
+19. Atualizar este arquivo de histórico.
+
+**Sessão 3:**
+
+20. Configurar Jest + RNTL e criar suíte completa de testes (use cases, mappers, componentes DS, telas, ViewModels, tema).
+21. Remover `coverage/` do versionamento e adicionar `.gitattributes`.
+22. Separar `navigation/` para `presentation/`; extrair `ExploreNavigator`.
+23. Instalar AsyncStorage, NetInfo, `@tanstack/query-async-storage-persister` e `react-query-persist-client`.
+24. Implementar persistência offline: `persister.ts`, `cacheConfig.ts`, `queryClient.ts` atualizado, `PersistQueryClientProvider`, `OfflineBanner`, `ErrorBoundary`, `setupOnlineManager`.
+25. Criar `UseCasesContext` e migrar ViewModels para `useUseCases()`.
+26. Criar Skeletons (`Skeleton.tsx`, `RepoListSkeleton`, `IssueListSkeleton`, `RepoDetailSkeleton`), `useRecentSearches` e `RecentSearchesList`.
+27. Atualizar `README.md` e este arquivo de histórico.
 
 ### O que foi gerado/assistido por IA
 
-- Todos os arquivos listados nas seções 1–14 foram propostos e criados pela IA.
-- Estrutura de camadas, tipos de entidades, mappers, ViewModels, configurações de ferramentas e todos os componentes de UI foram inteiramente gerados pela IA com base nas instruções do usuário, regras dos agentes especializados e especificações extraídas do Stitch.
+- Todos os arquivos listados nas seções 1–22 foram propostos e criados pela IA.
+- Estrutura de camadas, tipos de entidades, mappers, ViewModels, configurações de ferramentas, todos os componentes de UI, suíte completa de testes e infraestrutura de cache offline foram inteiramente gerados pela IA com base nas instruções do usuário e regras dos agentes especializados.
 
 ### O que a IA corrigiu durante o próprio fluxo
 
@@ -543,12 +575,237 @@ O `NavigationContainer` não recebia a prop `theme`, então React Navigation usa
 - Emojis tintados corrigidos com `Text as RNText` do react-native nativo.
 - `languageColors` centralizado em `tokens.ts` após linter/usuário identificar duplicação no `RepoCard`.
 
+**Sessão 3:**
+
+- `isNetInfoLinked` guard adicionado para evitar crash quando o módulo nativo não está linkado (Expo Go / Jest).
+- `gcTime` aumentado de 10 min para 24 h para casar com o `maxAge` do persister (sem alinhamento, entradas expiradas seriam hidratadas mas descartadas imediatamente).
+- `queueMicrotask` adicionado no subscriber do `useRecentSearches` para evitar `setState` durante o render de outra tela ao navegar de volta.
+- Retry policy refinada: `NetworkError` curto-circuita (sem ponto em tentar offline); outros erros até 2x com backoff.
+
 ### Avaliação crítica
 
-A IA acelerou significativamente o scaffolding, a configuração de ferramentas e a implementação de UI. O desenvolvedor validou cada decisão — em particular:
+A IA acelerou significativamente o scaffolding, a configuração de ferramentas, a implementação de UI e a escrita de testes. O desenvolvedor validou cada decisão — em particular:
 
 - **DI simplificada** (factory em vez de IoC container) foi decisão consciente de escopo.
 - **`ThemeModeContext` separado do Restyle** foi escolha arquitetural deliberada para não acoplar o sistema de tema a uma lib específica.
 - **Componentes como unidade mínima** — a regra "nenhum `View`/`Text` cru nas telas" foi definida pelo usuário e respeitada em todas as screens.
 - **Sem `any`** — restrição do ESLint aplicada desde o início, sem exceção adicionada.
 - **Dark mode completo** — propagado para componentes DS, navegação (header, tab bar, botão voltar), status bar e transições entre telas.
+- **`UseCasesContext`** foi adicionado após escrever os testes de ViewModel — necessário para injetar fakes sem `jest.mock` do `container`. Decisão de escopo validada pelo desenvolvedor.
+- **Persistência offline e error boundary** atendem dois itens que estavam na lista "faria com mais tempo", aproveitando a integração nativa do TanStack Query com o persister em vez de reinventar o mecanismo.
+
+---
+
+## 16. Correção de imports e path aliases
+
+**Sessão:** 2 (pós-implementação das telas).
+
+**Problema:** após consolidar todos os arquivos, alguns imports usavam caminhos relativos longos (`../../infrastructure/...`) em vez dos aliases configurados no `tsconfig.json` (`@infrastructure/`, `@presentation/`, etc.).
+
+**Resolução:** revisão global dos imports — todos os arquivos de `presentation/` passaram a usar aliases (`@ds/`, `@theme/`, `@screens/`, `@hooks/`, etc.). ESLint + `no-restricted-imports` garante que camadas não importem de outras incorretamente.
+
+---
+
+## 17. Testing — configuração completa e suíte de testes
+
+**Agente responsável:** `.claude/agents/testing.md`
+
+**Sessão:** 3.
+
+**Comando do usuário:**
+
+> "test(use-case): teste unitarios e de componentes"
+
+**Arquivos criados:**
+
+| Arquivo                                                                    | Responsabilidade                                                                                                         |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `jest.config.js`                                                           | preset `jest-expo`, módulo mappers para aliases `@*`, setup file                                                         |
+| `jest.setup.ts`                                                            | mocks globais: `@react-native-async-storage/async-storage`, `@react-native-community/netinfo`, `react-native-reanimated` |
+| `src/test-utils/fakeRepository.ts`                                         | `FakeGitHubRepository` — implementa `IGitHubRepository` com `jest.fn()`                                                  |
+| `src/test-utils/renderWithProviders.tsx`                                   | wrapper com `QueryClientProvider` isolado + `ThemeModeProvider` + `UseCasesProvider`                                     |
+| `src/test-utils/fixtures/index.ts`                                         | objetos de domínio prontos (`Repo`, `Issue`, `Owner`)                                                                    |
+| `src/test-utils/apiFixtures/index.ts`                                      | respostas brutas da API GitHub (antes dos mappers)                                                                       |
+| `src/domain/__tests__/GitHubErrors.test.ts`                                | testa instâncias e mensagens de cada erro de domínio                                                                     |
+| `src/application/use-cases/__tests__/SearchReposUseCase.test.ts`           | busca paginada, sem resultados, rate limit                                                                               |
+| `src/application/use-cases/__tests__/GetRepoDetailsUseCase.test.ts`        | sucesso e propagação de erros                                                                                            |
+| `src/application/use-cases/__tests__/GetRepoIssuesUseCase.test.ts`         | listagem paginada e erros                                                                                                |
+| `src/infrastructure/__tests__/repoMapper.test.ts`                          | mapeamento de campos, valores nulos                                                                                      |
+| `src/infrastructure/__tests__/issueMapper.test.ts`                         | mapeamento de campos, labels                                                                                             |
+| `src/infrastructure/__tests__/GitHubRepositoryImpl.test.ts`                | HTTP, paginação, erros 403/429/5xx, sem conexão                                                                          |
+| `src/presentation/components/ds/__tests__/*.test.tsx`                      | smoke tests de todos os 8 componentes DS                                                                                 |
+| `src/presentation/components/common/__tests__/*.test.tsx`                  | EmptyState, ErrorState, LoadingSpinner, OfflineBanner, ErrorBoundary                                                     |
+| `src/presentation/components/issues/__tests__/*.test.tsx`                  | IssueItem, IssueLabelChip, IssueStateIndicator                                                                           |
+| `src/presentation/components/repo/__tests__/RepoCard.test.tsx`             | render e prop `onPress`                                                                                                  |
+| `src/presentation/components/repo-detail/__tests__/StatCard.test.tsx`      | formatação de contagem                                                                                                   |
+| `src/presentation/components/search/__tests__/SearchBar.test.tsx`          | input, limpar, busca                                                                                                     |
+| `src/presentation/components/search/__tests__/RecentSearchesList.test.tsx` | render de buscas e seleção                                                                                               |
+| `src/presentation/screens/__tests__/SearchScreen.test.tsx`                 | loading, empty, resultados, erro                                                                                         |
+| `src/presentation/screens/__tests__/RepoDetailScreen.test.tsx`             | loading, success, erro                                                                                                   |
+| `src/presentation/screens/__tests__/IssuesScreen.test.tsx`                 | loading, lista, navegação de volta                                                                                       |
+| `src/presentation/viewmodels/__tests__/useSearchViewModel.test.ts`         | debounce, paginação, pull-to-refresh                                                                                     |
+| `src/presentation/viewmodels/__tests__/useRepoDetailViewModel.test.ts`     | fetch, cache, erro                                                                                                       |
+| `src/presentation/viewmodels/__tests__/useIssuesViewModel.test.ts`         | paginação, erros                                                                                                         |
+| `src/presentation/theme/__tests__/ThemeModeContext.test.tsx`               | toggle, persistência de estado                                                                                           |
+| `src/presentation/theme/__tests__/useColors.test.tsx`                      | retorna paleta correta por modo                                                                                          |
+| `src/presentation/hooks/__tests__/useOnlineStatus.test.ts`                 | online/offline via mock de NetInfo                                                                                       |
+| `src/presentation/hooks/__tests__/useRecentSearches.test.ts`               | deriva buscas do QueryCache                                                                                              |
+
+**Decisões-chave:**
+
+- **`renderWithProviders` inclui `UseCasesProvider`**: telas recebem fakes via contexto — sem `jest.mock` de módulo.
+- **`QueryClient` isolado por teste** (`retry: false`, `gcTime: 0`): sem vazamento de cache entre testes.
+- **Mocks globais no `jest.setup.ts`**: AsyncStorage (in-memory), NetInfo (`isConnected: true` por padrão) e Reanimated (`__mocks__` oficial) evitam erros de módulo nativo em ambiente Jest.
+- **`useOnlineStatus` mockado em `OfflineBanner.test`**: evita dependência do módulo nativo no teste de componente.
+
+---
+
+## 18. Gitattributes e remoção de coverage do versionamento
+
+**Sessão:** 3.
+
+**Comando do usuário:**
+
+> "chore(git): remove coverage do versionamento e adiciona .gitattributes"
+
+**Arquivos criados / modificados:**
+
+| Arquivo          | Mudança                                                                         |
+| ---------------- | ------------------------------------------------------------------------------- |
+| `.gitignore`     | `coverage/` adicionado                                                          |
+| `.gitattributes` | marca `yarn.lock` e `*.snap` como diff=none; configura `eol=lf` para `.ts/.tsx` |
+
+**Por quê:** o diretório `coverage/` foi commitado acidentalmente na sessão anterior. `.gitattributes` garante consistência de line endings no Windows e reduz ruído em diffs de lock file.
+
+---
+
+## 19. Persistência offline e detecção de rede
+
+**Agente responsável:** `.claude/agents/data-cache.md`
+
+**Sessão:** 3.
+
+**Comando do usuário:**
+
+> "colocando funcionalidade de async-storage netinfo e pesistencia de dados quando não a internet"
+
+**Dependências instaladas:**
+
+- `@react-native-async-storage/async-storage` v3
+- `@react-native-community/netinfo` v11.5
+- `@tanstack/query-async-storage-persister` v5
+- `@tanstack/react-query-persist-client` v5
+
+**Arquivos criados / modificados:**
+
+| Arquivo                                                | Responsabilidade                                                                                                                              |
+| ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/infrastructure/di/cacheConfig.ts`                 | Constantes `STALE_TIME_MS` (5 min) e `CACHE_MAX_AGE_MS` (24 h)                                                                                |
+| `src/infrastructure/di/persister.ts`                   | `createAsyncStoragePersister` com chave `github-explorer-cache`                                                                               |
+| `src/infrastructure/di/queryClient.ts`                 | `gcTime = CACHE_MAX_AGE_MS`; retry inteligente (sem retry em `NetworkError`)                                                                  |
+| `src/infrastructure/network/isNetInfoLinked.ts`        | Guard: detecta se o módulo nativo RNCNetInfo está linkado (Turbo / Bridge)                                                                    |
+| `src/infrastructure/network/netInfoListener.ts`        | `subscribeNetInfo` — abstração sobre `NetInfo.addEventListener`                                                                               |
+| `src/infrastructure/network/onlineManagerBridge.ts`    | `setupOnlineManager` — conecta NetInfo ao `onlineManager` do TanStack Query                                                                   |
+| `src/presentation/hooks/useOnlineStatus.ts`            | Hook que expõe `isOnline: boolean` para a UI                                                                                                  |
+| `src/presentation/components/common/OfflineBanner.tsx` | Banner vermelho/warning visível quando `useOnlineStatus()` retorna `false`                                                                    |
+| `src/presentation/components/common/ErrorBoundary.tsx` | Class component que captura erros não tratados e exibe `ErrorState` com retry                                                                 |
+| `src/presentation/providers/AppProviders.tsx`          | Substituído `QueryClientProvider` por `PersistQueryClientProvider`; adicionado `ErrorBoundary`, `OfflineBanner`, `setupOnlineManager` no boot |
+
+**Decisões-chave:**
+
+- **`isNetInfoLinked` + `require` lazy**: o import top-level de `netinfo` crasha em ambientes onde o módulo nativo não está presente (Expo Go mais antigo, Jest sem mock). O guard checa `TurboModuleRegistry` / `NativeModules` antes de carregar o pacote.
+- **`gcTime = maxAge = 24h`**: sem esse alinhamento, o persister hidrata dados que o QueryClient descarta imediatamente por `gcTime` expirado. Os dois precisam concordar.
+- **Retry policy**: `!(error instanceof NetworkError) && failureCount < 2` — sem conexão não há motivo para tentar 3x; o `onlineManager` já pausa automaticamente queries pendentes.
+- **`ErrorBoundary` reusa `ErrorState`**: visual consistente com os erros de query; sem componente extra a manter.
+
+**Erros encontrados e corrigidos:**
+
+| Erro                                                        | Causa                                                | Correção                                                          |
+| ----------------------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------------- |
+| Crash no Jest ao importar `@react-native-community/netinfo` | Módulo nativo não disponível em Node                 | Mock global em `jest.setup.ts` retornando `{ isConnected: true }` |
+| Cache hidratado mas descartado imediatamente                | `gcTime: 10min` menor que `maxAge: 24h` do persister | `gcTime` aumentado para `CACHE_MAX_AGE_MS` (24h)                  |
+
+---
+
+## 20. UseCasesContext e ExploreNavigator — separação de responsabilidades
+
+**Agente responsável:** `.claude/agents/architecture-guardian.md` + `.claude/agents/screens-ux.md`
+
+**Sessão:** 3.
+
+**Comandos do usuário:**
+
+> "fix: separação telas"
+
+**Problema identificado:** `navigation/` estava em `infrastructure/`, mas a navegação consome estado de tema (`useThemeMode`) — pertence à camada de apresentação. Além disso, ViewModels importavam use cases diretamente do `container.ts`, tornando os testes dependentes de `jest.mock`.
+
+**Arquivos criados / modificados:**
+
+| Arquivo                                                 | Mudança                                                                                        |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `src/presentation/navigation/types.ts`                  | Movido de `src/infrastructure/navigation/types.ts`                                             |
+| `src/presentation/navigation/RootNavigator.tsx`         | Movido de `src/infrastructure/navigation/RootNavigator.tsx`; simplificado para tabs + navTheme |
+| `src/presentation/navigation/ExploreNavigator.tsx`      | Novo: stack interno (Search → RepoDetail → Issues) extraído do RootNavigator                   |
+| `src/presentation/providers/UseCasesContext.tsx`        | Novo: `UseCasesProvider` + `useUseCases()` — injeta use cases via React Context                |
+| `src/presentation/viewmodels/useSearchViewModel.ts`     | Migrado de import estático para `useUseCases()`                                                |
+| `src/presentation/viewmodels/useRepoDetailViewModel.ts` | Migrado para `useUseCases()`                                                                   |
+| `src/presentation/viewmodels/useIssuesViewModel.ts`     | Migrado para `useUseCases()`                                                                   |
+| `src/presentation/providers/AppProviders.tsx`           | Adicionado `UseCasesProvider` com use cases do `container`                                     |
+| `src/test-utils/renderWithProviders.tsx`                | Adicionado `UseCasesProvider` com `FakeGitHubRepository`                                       |
+
+**Decisões-chave:**
+
+- **`navigation/` em `presentation/`**: a camada de infraestrutura não deve conhecer `useThemeMode` — contexto de UI. Mover resolve a violação de dependência.
+- **`ExploreNavigator` separado**: `RootNavigator` vira apenas tab navigator + tema; o stack interno tem sua própria responsabilidade. Facilita testes de navegação isolados.
+- **`UseCasesContext` + `useUseCases()`**: ViewModels deixam de depender de um singleton importado estaticamente — recebem via contexto. `renderWithProviders` injeta `FakeGitHubRepository` sem `jest.mock`.
+
+---
+
+## 21. Skeletons, RecentSearches e melhorias de UX
+
+**Agente responsável:** `.claude/agents/design-system.md` + `.claude/agents/screens-ux.md`
+
+**Sessão:** 3.
+
+**Comando do usuário:**
+
+> "colocando funcionalidade de async-storage netinfo e pesistencia de dados quando não a internet" (inclui skeletons e buscas recentes como parte da experiência offline)
+
+**Arquivos criados / modificados:**
+
+| Arquivo                                                          | Responsabilidade                                                                                                       |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `src/presentation/components/common/Skeleton.tsx`                | Componente base: shimmer animado com Reanimated (`interpolateColor` entre `surfaceContainer` e `surfaceContainerHigh`) |
+| `src/presentation/components/search/RepoListSkeleton.tsx`        | 5 cards skeleton para a lista de repositórios                                                                          |
+| `src/presentation/components/issues/IssueListSkeleton.tsx`       | Skeleton de lista de issues                                                                                            |
+| `src/presentation/components/repo-detail/RepoDetailSkeleton.tsx` | Skeleton do cabeçalho + stats do detalhe                                                                               |
+| `src/presentation/hooks/useRecentSearches.ts`                    | Deriva `RecentSearch[]` do `QueryCache` — listen via `subscribe`, atualiza com `queueMicrotask`                        |
+| `src/presentation/components/search/RecentSearchesList.tsx`      | Lista scrollável de buscas recentes com ícone de relógio e contagem formatada                                          |
+| `src/presentation/components/issues/IssueLabelChip.tsx`          | Atualizado: suporte a labels sem cor definida (fallback para cor muted)                                                |
+| `src/presentation/components/search/RepoList.tsx`                | Atualizado: exibe `RepoListSkeleton` no estado loading; `RecentSearchesList` quando sem query                          |
+| `src/presentation/components/issues/IssueList.tsx`               | Atualizado: exibe `IssueListSkeleton` no estado loading                                                                |
+| `src/presentation/screens/RepoDetailScreen.tsx`                  | Atualizado: exibe `RepoDetailSkeleton` no estado loading                                                               |
+
+**Decisões-chave:**
+
+- **`useRecentSearches` deriva do `QueryCache`**: não há estado duplicado. Toda busca bem-sucedida (`['repos', 'search', query]`) vira automaticamente uma "busca recente" — sem lógica de persistência extra.
+- **`queueMicrotask` no subscriber**: evita `setState` síncrono durante o render de outra tela (ex.: RepoDetail atualizando o cache ao montar). Sem isso, React lança warning de setState fora de um evento.
+- **`Skeleton` com `interpolateColor` do Reanimated**: a cor do shimmer interpola em worklet nativo entre dois tokens do tema — reativo a light/dark automaticamente.
+- **`RecentSearchesList` aparece offline ou sem query**: se o usuário não digitou nada ou está offline, a lista de buscas passadas dá acesso imediato a dados cacheados.
+
+---
+
+## 22. Atualização final da documentação
+
+**Sessão:** 3.
+
+**Comando do usuário:**
+
+> "atualize '/Users/italo/Documents/projetos/element-test/README.md' '/Users/italo/Documents/projetos/element-test/docs/HISTORICO_AGENTES.md'"
+
+**Arquivos modificados:**
+
+| Arquivo                     | Mudanças                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `README.md`                 | Stack: +4 libs de persistência/rede. Arquitetura: diagrama atualizado (navigation em presentation), MVVM + UseCasesContext, 4 novas entradas de trade-offs. Funcionalidades: +offline, +buscas recentes, +error boundary, +skeletons. Tokens DS: nomenclatura Material 3 expandida. Cache: seção reescrita com persister + online manager. Testes: +hooks e componentes de UX. Critérios de avaliação: status atualizado. "O que faria diferente": removidos os 3 itens já implementados. |
+| `docs/HISTORICO_AGENTES.md` | Índice: +seções 19–22. Seção 7: nota de atualização apontando para seção 17. Seção 10: nota de atualização apontando para seções 19–20. Seção 15: +Sessão 3 de prompts, +correções da sessão 3, avaliação crítica expandida. +Seções 16–22 completas.                                                                                                                                                                                                                                     |

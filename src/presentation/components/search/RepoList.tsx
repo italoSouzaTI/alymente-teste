@@ -6,12 +6,15 @@ import type { Repo } from '@domain/entities/Repo';
 import type { SearchViewState, SearchViewActions } from '@viewmodels/useSearchViewModel';
 import { useColors } from '@theme/useColors';
 import { spacing } from '@ds/tokens';
+import { useOnlineStatus } from '@hooks/useOnlineStatus';
+import { useRecentSearches } from '@hooks/useRecentSearches';
 import { RepoCard } from '@components/repo/RepoCard';
 import { EmptyState } from '@components/common/EmptyState';
 import { ErrorState } from '@components/common/ErrorState';
-import { LoadingSpinner } from '@components/common/LoadingSpinner';
 import { SearchResultsHeader } from './SearchResultsHeader';
+import { RepoListSkeleton } from './RepoListSkeleton';
 import { RepoListFooter } from './RepoListFooter';
+import { RecentSearchesList } from './RecentSearchesList';
 
 interface RepoListProps {
   state: SearchViewState;
@@ -21,6 +24,8 @@ interface RepoListProps {
 
 export function RepoList({ state, actions, onRepoPress }: RepoListProps) {
   const c = useColors();
+  const isOnline = useOnlineStatus();
+  const recentSearches = useRecentSearches();
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<Repo>) => (
@@ -34,7 +39,7 @@ export function RepoList({ state, actions, onRepoPress }: RepoListProps) {
   const keyExtractor = useCallback((item: Repo) => String(item.id), []);
 
   if (state.isLoading) {
-    return <LoadingSpinner fullScreen />;
+    return <RepoListSkeleton />;
   }
 
   if (state.error != null) {
@@ -42,6 +47,9 @@ export function RepoList({ state, actions, onRepoPress }: RepoListProps) {
   }
 
   if (state.query.trim().length === 0) {
+    if (!isOnline && recentSearches.length > 0) {
+      return <RecentSearchesList searches={recentSearches} onSelect={actions.setQuery} />;
+    }
     return (
       <EmptyState
         icon={MagnifyingGlassIcon}

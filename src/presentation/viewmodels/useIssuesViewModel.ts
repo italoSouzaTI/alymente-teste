@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import type { Issue } from '@domain/entities/Issue';
 import { RateLimitError, NetworkError } from '@domain/errors/GitHubErrors';
-import { getRepoIssuesUseCase } from '@infrastructure/di/container';
+import { useUseCases } from '@presentation/providers/UseCasesContext';
 
 // ─── State ──────────────────────────────────────────────────────────────────
 
@@ -35,6 +35,7 @@ export function useIssuesViewModel(
   owner: string,
   repo: string,
 ): [IssuesViewState, IssuesViewActions] {
+  const { getRepoIssuesUseCase } = useUseCases();
   const {
     data,
     isLoading,

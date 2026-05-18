@@ -4,16 +4,9 @@ import { renderHookWithProviders } from '../../../test-utils/renderWithProviders
 import { makeIssue, makePaginated } from '../../../test-utils/fixtures';
 import { RateLimitError } from '@domain/errors/GitHubErrors';
 
-jest.mock('@infrastructure/di/container', () => ({
-  searchReposUseCase: { execute: jest.fn() },
-  getRepoDetailsUseCase: { execute: jest.fn() },
-  getRepoIssuesUseCase: { execute: jest.fn() },
-}));
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { getRepoIssuesUseCase } = require('@infrastructure/di/container') as {
-  getRepoIssuesUseCase: { execute: jest.Mock };
-};
+function makeIssuesUseCase(impl?: jest.Mock) {
+  return { execute: impl ?? jest.fn() } as never;
+}
 
 describe('useIssuesViewModel', () => {
   beforeEach(() => {
@@ -21,9 +14,11 @@ describe('useIssuesViewModel', () => {
   });
 
   it('has correct initial state', () => {
-    getRepoIssuesUseCase.execute.mockResolvedValue(makePaginated([]));
-
-    const { result } = renderHookWithProviders(() => useIssuesViewModel('facebook', 'react'));
+    const { result } = renderHookWithProviders(() => useIssuesViewModel('facebook', 'react'), {
+      useCases: {
+        getRepoIssuesUseCase: makeIssuesUseCase(jest.fn().mockResolvedValue(makePaginated([]))),
+      },
+    });
     const [state] = result.current;
 
     expect(state.issues).toHaveLength(0);
@@ -33,9 +28,11 @@ describe('useIssuesViewModel', () => {
 
   it('populates issues after successful execute', async () => {
     const issues = [makeIssue({ title: 'Fix memory leak', number: 100 })];
-    getRepoIssuesUseCase.execute.mockResolvedValue(makePaginated(issues));
+    const execute = jest.fn().mockResolvedValue(makePaginated(issues));
 
-    const { result } = renderHookWithProviders(() => useIssuesViewModel('facebook', 'react'));
+    const { result } = renderHookWithProviders(() => useIssuesViewModel('facebook', 'react'), {
+      useCases: { getRepoIssuesUseCase: makeIssuesUseCase(execute) },
+    });
 
     await act(async () => {
       await new Promise((r) => setTimeout(r, 50));
@@ -47,25 +44,25 @@ describe('useIssuesViewModel', () => {
   });
 
   it('calls execute with correct params', async () => {
-    getRepoIssuesUseCase.execute.mockResolvedValue(makePaginated([]));
+    const execute = jest.fn().mockResolvedValue(makePaginated([]));
 
-    renderHookWithProviders(() => useIssuesViewModel('torvalds', 'linux'));
+    renderHookWithProviders(() => useIssuesViewModel('torvalds', 'linux'), {
+      useCases: { getRepoIssuesUseCase: makeIssuesUseCase(execute) },
+    });
 
     await act(async () => {
       await new Promise((r) => setTimeout(r, 50));
     });
 
-    expect(getRepoIssuesUseCase.execute).toHaveBeenCalledWith({
-      owner: 'torvalds',
-      repo: 'linux',
-      page: 1,
-    });
+    expect(execute).toHaveBeenCalledWith({ owner: 'torvalds', repo: 'linux', page: 1 });
   });
 
   it('sets error message on RateLimitError', async () => {
-    getRepoIssuesUseCase.execute.mockRejectedValue(new RateLimitError());
+    const execute = jest.fn().mockRejectedValue(new RateLimitError());
 
-    const { result } = renderHookWithProviders(() => useIssuesViewModel('facebook', 'react'));
+    const { result } = renderHookWithProviders(() => useIssuesViewModel('facebook', 'react'), {
+      useCases: { getRepoIssuesUseCase: makeIssuesUseCase(execute) },
+    });
 
     await act(async () => {
       await new Promise((r) => setTimeout(r, 50));
@@ -76,17 +73,23 @@ describe('useIssuesViewModel', () => {
   });
 
   it('does not fetch when owner or repo is empty', () => {
-    const { result } = renderHookWithProviders(() => useIssuesViewModel('', ''));
+    const execute = jest.fn();
+
+    const { result } = renderHookWithProviders(() => useIssuesViewModel('', ''), {
+      useCases: { getRepoIssuesUseCase: makeIssuesUseCase(execute) },
+    });
     const [state] = result.current;
 
     expect(state.issues).toHaveLength(0);
-    expect(getRepoIssuesUseCase.execute).not.toHaveBeenCalled();
+    expect(execute).not.toHaveBeenCalled();
   });
 
   it('sets hasNextPage correctly', async () => {
-    getRepoIssuesUseCase.execute.mockResolvedValue(makePaginated([makeIssue()], true));
+    const execute = jest.fn().mockResolvedValue(makePaginated([makeIssue()], true));
 
-    const { result } = renderHookWithProviders(() => useIssuesViewModel('facebook', 'react'));
+    const { result } = renderHookWithProviders(() => useIssuesViewModel('facebook', 'react'), {
+      useCases: { getRepoIssuesUseCase: makeIssuesUseCase(execute) },
+    });
 
     await act(async () => {
       await new Promise((r) => setTimeout(r, 50));

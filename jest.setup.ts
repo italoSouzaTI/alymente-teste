@@ -15,6 +15,16 @@ jest.mock('react-native-safe-area-context', () => ({
   },
 }));
 
+// Mock global @react-native-async-storage/async-storage
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+);
+
+// Mock global @react-native-community/netinfo
+jest.mock('@react-native-community/netinfo', () =>
+  require('@react-native-community/netinfo/jest/netinfo-mock.js'),
+);
+
 // Mock global @shopify/flash-list — re-exporta como FlatList
 jest.mock('@shopify/flash-list', () => {
   const React = require('react');

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ShowcaseScreenProps } from '@infrastructure/navigation/types';
+import type { ShowcaseScreenProps } from '@presentation/navigation/types';
 import {
   AvatarsSection,
   BadgesSection,

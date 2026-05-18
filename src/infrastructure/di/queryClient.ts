@@ -1,11 +1,13 @@
 import { QueryClient } from '@tanstack/react-query';
+import { NetworkError } from '@domain/errors/GitHubErrors';
+import { STALE_TIME_MS, CACHE_MAX_AGE_MS } from './cacheConfig';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5,
-      gcTime: 1000 * 60 * 10,
-      retry: 2,
+      staleTime: STALE_TIME_MS,
+      gcTime: CACHE_MAX_AGE_MS,
+      retry: (failureCount, error) => !(error instanceof NetworkError) && failureCount < 2,
       refetchOnWindowFocus: false,
     },
   },

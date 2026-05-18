@@ -8,9 +8,22 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NavigationContainer } from '@react-navigation/native';
 import { ThemeModeProvider } from '@theme/ThemeModeContext';
+import { UseCasesProvider, type UseCases } from '@presentation/providers/UseCasesContext';
 
 interface ProviderOptions {
   withNavigation?: boolean;
+  useCases?: Partial<UseCases>;
+}
+
+const noopUseCase = { execute: jest.fn() };
+
+function buildDefaultUseCases(overrides?: Partial<UseCases>): UseCases {
+  return {
+    searchReposUseCase: noopUseCase as unknown as UseCases['searchReposUseCase'],
+    getRepoDetailsUseCase: noopUseCase as unknown as UseCases['getRepoDetailsUseCase'],
+    getRepoIssuesUseCase: noopUseCase as unknown as UseCases['getRepoIssuesUseCase'],
+    ...overrides,
+  };
 }
 
 function createQueryClient(): QueryClient {
@@ -30,9 +43,12 @@ function createQueryClient(): QueryClient {
 function buildWrapper(options?: ProviderOptions) {
   return function Wrapper({ children }: { children: React.ReactNode }) {
     const queryClient = createQueryClient();
+    const useCases = buildDefaultUseCases(options?.useCases);
     const inner = (
       <QueryClientProvider client={queryClient}>
-        <ThemeModeProvider>{children}</ThemeModeProvider>
+        <ThemeModeProvider>
+          <UseCasesProvider value={useCases}>{children}</UseCasesProvider>
+        </ThemeModeProvider>
       </QueryClientProvider>
     );
     if (options?.withNavigation) {
@@ -46,8 +62,8 @@ export function renderWithProviders(
   ui: React.ReactElement,
   options?: RenderOptions & ProviderOptions,
 ) {
-  const { withNavigation, ...renderOptions } = options ?? {};
-  const Wrapper = buildWrapper({ withNavigation });
+  const { withNavigation, useCases, ...renderOptions } = options ?? {};
+  const Wrapper = buildWrapper({ withNavigation, useCases });
   return render(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
@@ -55,7 +71,7 @@ export function renderHookWithProviders<Result, Props>(
   hook: (props: Props) => Result,
   options?: RenderHookOptions<Props> & ProviderOptions,
 ) {
-  const { withNavigation, ...hookOptions } = options ?? {};
-  const Wrapper = buildWrapper({ withNavigation });
+  const { withNavigation, useCases, ...hookOptions } = options ?? {};
+  const Wrapper = buildWrapper({ withNavigation, useCases });
   return renderHook(hook, { wrapper: Wrapper, ...hookOptions });
 }

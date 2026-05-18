@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import type { ExploreNavigationProp, SearchScreenProps } from '@infrastructure/navigation/types';
+import type { ExploreNavigationProp, SearchScreenProps } from '@presentation/navigation/types';
 import { useNavigation } from '@react-navigation/native';
 import type { Repo } from '@domain/entities/Repo';
 import { useSearchViewModel } from '@viewmodels/useSearchViewModel';

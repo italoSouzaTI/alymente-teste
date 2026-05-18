@@ -1,49 +1,13 @@
 import { MagnifyingGlassIcon, PaintBrushIcon } from 'phosphor-react-native';
 import { DarkTheme, DefaultTheme, NavigationContainer, type Theme } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import type { ExploreStackParamList, RootTabParamList } from './types';
-import { SearchScreen } from '@screens/SearchScreen';
-import { RepoDetailScreen } from '@screens/RepoDetailScreen';
-import { IssuesScreen } from '@screens/IssuesScreen';
+import type { RootTabParamList } from './types';
 import { ShowcaseScreen } from '@screens/ShowcaseScreen';
 import { useThemeMode } from '@theme/ThemeModeContext';
 import { darkColors, lightColors } from '@ds/tokens';
+import { ExploreNavigator } from './ExploreNavigator';
 
-const ExploreStack = createNativeStackNavigator<ExploreStackParamList>();
-const RootTab = createBottomTabNavigator<RootTabParamList>();
-
-function ExploreNavigator() {
-  const { isDark } = useThemeMode();
-  const c = isDark ? darkColors : lightColors;
-
-  return (
-    <ExploreStack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: c.surfaceWhite },
-        headerTintColor: c.primaryAction,
-        headerTitleStyle: { color: c.onSurface, fontWeight: '600' },
-        headerShadowVisible: false,
-      }}
-    >
-      <ExploreStack.Screen
-        name="Search"
-        component={SearchScreen}
-        options={{ title: 'GitHub Explorer' }}
-      />
-      <ExploreStack.Screen
-        name="RepoDetail"
-        component={RepoDetailScreen}
-        options={({ route }) => ({ title: route.params.repoName })}
-      />
-      <ExploreStack.Screen
-        name="Issues"
-        component={IssuesScreen}
-        options={({ route }) => ({ title: `Issues · ${route.params.repoName}` })}
-      />
-    </ExploreStack.Navigator>
-  );
-}
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export function RootNavigator() {
   const { isDark } = useThemeMode();
@@ -65,7 +29,7 @@ export function RootNavigator() {
 
   return (
     <NavigationContainer theme={navTheme}>
-      <RootTab.Navigator
+      <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
             backgroundColor: c.surfaceWhite,
@@ -78,7 +42,7 @@ export function RootNavigator() {
           headerShown: false,
         }}
       >
-        <RootTab.Screen
+        <Tab.Screen
           name="Explore"
           component={ExploreNavigator}
           options={{
@@ -88,7 +52,7 @@ export function RootNavigator() {
             ),
           }}
         />
-        <RootTab.Screen
+        <Tab.Screen
           name="Showcase"
           component={ShowcaseScreen}
           options={{
@@ -99,7 +63,7 @@ export function RootNavigator() {
             ),
           }}
         />
-      </RootTab.Navigator>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }

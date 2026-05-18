@@ -93,7 +93,7 @@ describe('IssuesScreen', () => {
     expect(getByText('Sem issues abertas')).toBeTruthy();
   });
 
-  it('renders loading spinner when isLoading is true', () => {
+  it('renders skeleton when isLoading is true', () => {
     const state: IssuesViewState = {
       issues: [],
       isLoading: true,
@@ -104,12 +104,12 @@ describe('IssuesScreen', () => {
     };
     useIssuesViewModel.mockReturnValue([state, mockActions]);
 
-    expect(() =>
-      renderWithProviders(
-        <IssuesScreen route={mockRoute as never} navigation={mockNavigation as never} />,
-        { withNavigation: true },
-      ),
-    ).not.toThrow();
+    const { getByTestId } = renderWithProviders(
+      <IssuesScreen route={mockRoute as never} navigation={mockNavigation as never} />,
+      { withNavigation: true },
+    );
+
+    expect(getByTestId('issue-list-skeleton')).toBeTruthy();
   });
 
   it('renders error state when error is present', () => {

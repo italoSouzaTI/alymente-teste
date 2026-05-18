@@ -1,5 +1,5 @@
 import React from 'react';
-import type { IssuesScreenProps } from '@infrastructure/navigation/types';
+import type { IssuesScreenProps } from '@presentation/navigation/types';
 import { useIssuesViewModel } from '@viewmodels/useIssuesViewModel';
 import { Screen } from '@components/common/Screen';
 import { IssueList } from '@components/issues/IssueList';

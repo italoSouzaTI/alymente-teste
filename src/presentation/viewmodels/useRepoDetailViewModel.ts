@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import type { Repo } from '@domain/entities/Repo';
 import { RateLimitError, NetworkError } from '@domain/errors/GitHubErrors';
-import { getRepoDetailsUseCase } from '@infrastructure/di/container';
+import { useUseCases } from '@presentation/providers/UseCasesContext';
 
 // ─── State ──────────────────────────────────────────────────────────────────
 
@@ -30,6 +30,7 @@ export function useRepoDetailViewModel(
   owner: string,
   repo: string,
 ): [RepoDetailViewState, RepoDetailViewActions] {
+  const { getRepoDetailsUseCase } = useUseCases();
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['repos', 'detail', owner, repo],
     queryFn: () => getRepoDetailsUseCase.execute({ owner, repo }),

@@ -22,11 +22,14 @@ export function ErrorState({ message, onRetry }: ErrorStateProps) {
       <Text variant="bodySm" color="muted" style={styles.center}>
         {message}
       </Text>
-      <View style={styles.buttonContainer}>
-        {onRetry != null && (
-          <Button label="Tentar novamente" variant="secondary" onPress={onRetry} />
-        )}
-      </View>
+      {onRetry != null && (
+        <Button
+          label="Tentar novamente"
+          variant="secondary"
+          onPress={onRetry}
+          style={styles.retryButton}
+        />
+      )}
     </View>
   );
 }
@@ -41,9 +44,5 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xxl,
   },
   center: { textAlign: 'center' },
-  buttonContainer: {
-    marginTop: spacing.md,
-    width: '100%',
-    alignItems: 'center',
-  },
+  retryButton: { alignSelf: 'center' },
 });

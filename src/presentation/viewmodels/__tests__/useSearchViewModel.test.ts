@@ -3,24 +3,29 @@ import { useSearchViewModel } from '@viewmodels/useSearchViewModel';
 import { renderHookWithProviders } from '../../../test-utils/renderWithProviders';
 import { makeRepo, makePaginated } from '../../../test-utils/fixtures';
 
-jest.mock('@infrastructure/di/container', () => ({
-  searchReposUseCase: { execute: jest.fn() },
-  getRepoDetailsUseCase: { execute: jest.fn() },
-  getRepoIssuesUseCase: { execute: jest.fn() },
+jest.mock('@hooks/useOnlineStatus', () => ({
+  useOnlineStatus: jest.fn().mockReturnValue(true),
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const { searchReposUseCase } = require('@infrastructure/di/container') as {
-  searchReposUseCase: { execute: jest.Mock };
+const { useOnlineStatus } = require('@hooks/useOnlineStatus') as {
+  useOnlineStatus: jest.Mock;
 };
+
+function makeSearchUseCase(impl?: jest.Mock) {
+  return { execute: impl ?? jest.fn() } as never;
+}
 
 describe('useSearchViewModel', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    useOnlineStatus.mockReturnValue(true);
   });
 
   it('has correct initial state', () => {
-    const { result } = renderHookWithProviders(() => useSearchViewModel());
+    const { result } = renderHookWithProviders(() => useSearchViewModel(), {
+      useCases: { searchReposUseCase: makeSearchUseCase() },
+    });
     const [state] = result.current;
 
     expect(state.query).toBe('');
@@ -32,15 +37,20 @@ describe('useSearchViewModel', () => {
   });
 
   it('does not call execute when query is empty', () => {
-    renderHookWithProviders(() => useSearchViewModel());
+    const execute = jest.fn();
+    renderHookWithProviders(() => useSearchViewModel(), {
+      useCases: { searchReposUseCase: makeSearchUseCase(execute) },
+    });
 
-    expect(searchReposUseCase.execute).not.toHaveBeenCalled();
+    expect(execute).not.toHaveBeenCalled();
   });
 
   it('updates query when setQuery is called', async () => {
-    searchReposUseCase.execute.mockResolvedValue(makePaginated([makeRepo()]));
+    const execute = jest.fn().mockResolvedValue(makePaginated([makeRepo()]));
 
-    const { result } = renderHookWithProviders(() => useSearchViewModel());
+    const { result } = renderHookWithProviders(() => useSearchViewModel(), {
+      useCases: { searchReposUseCase: makeSearchUseCase(execute) },
+    });
     const [, actions] = result.current;
 
     await act(async () => {
@@ -53,9 +63,11 @@ describe('useSearchViewModel', () => {
 
   it('populates repos after valid query resolves', async () => {
     const repos = [makeRepo({ fullName: 'facebook/react' })];
-    searchReposUseCase.execute.mockResolvedValue(makePaginated(repos));
+    const execute = jest.fn().mockResolvedValue(makePaginated(repos));
 
-    const { result } = renderHookWithProviders(() => useSearchViewModel());
+    const { result } = renderHookWithProviders(() => useSearchViewModel(), {
+      useCases: { searchReposUseCase: makeSearchUseCase(execute) },
+    });
 
     await act(async () => {
       result.current[1].setQuery('react');
@@ -70,9 +82,11 @@ describe('useSearchViewModel', () => {
   });
 
   it('sets error message on rejected execute', async () => {
-    searchReposUseCase.execute.mockRejectedValue(new Error('Network failure'));
+    const execute = jest.fn().mockRejectedValue(new Error('Network failure'));
 
-    const { result } = renderHookWithProviders(() => useSearchViewModel());
+    const { result } = renderHookWithProviders(() => useSearchViewModel(), {
+      useCases: { searchReposUseCase: makeSearchUseCase(execute) },
+    });
 
     await act(async () => {
       result.current[1].setQuery('react');
@@ -86,10 +100,34 @@ describe('useSearchViewModel', () => {
     expect(state.error).toBeTruthy();
   });
 
-  it('exposes retry action that calls refetch', async () => {
-    searchReposUseCase.execute.mockResolvedValue(makePaginated([makeRepo()]));
+  it('offline-sem-cache: retorna erro NetworkError e isLoading=false', async () => {
+    useOnlineStatus.mockReturnValue(false);
+    const execute = jest.fn().mockResolvedValue(makePaginated([]));
 
-    const { result } = renderHookWithProviders(() => useSearchViewModel());
+    const { result } = renderHookWithProviders(() => useSearchViewModel(), {
+      useCases: { searchReposUseCase: makeSearchUseCase(execute) },
+    });
+
+    await act(async () => {
+      result.current[1].setQuery('react');
+    });
+
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 50));
+    });
+
+    const [state] = result.current;
+    expect(state.isLoading).toBe(false);
+    expect(state.error).toContain('Sem conexão');
+    expect(state.repos).toHaveLength(0);
+  });
+
+  it('exposes retry action that calls refetch', async () => {
+    const execute = jest.fn().mockResolvedValue(makePaginated([makeRepo()]));
+
+    const { result } = renderHookWithProviders(() => useSearchViewModel(), {
+      useCases: { searchReposUseCase: makeSearchUseCase(execute) },
+    });
 
     await act(async () => {
       result.current[1].setQuery('react');
@@ -99,6 +137,6 @@ describe('useSearchViewModel', () => {
       result.current[1].retry();
     });
 
-    expect(searchReposUseCase.execute).toHaveBeenCalled();
+    expect(execute).toHaveBeenCalled();
   });
 });

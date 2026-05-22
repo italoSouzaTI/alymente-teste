@@ -1,7 +1,10 @@
 import { create } from 'axios';
 
 const GITHUB_TOKEN = process.env.EXPO_PUBLIC_GITHUB_TOKEN;
-const BASE_URL = 'https://api.github.com';
+const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
+if (!BASE_URL) {
+  throw new Error('EXPO_PUBLIC_BASE_URL is not set');
+}
 export const httpClient = create({
   baseURL: BASE_URL,
   headers: {

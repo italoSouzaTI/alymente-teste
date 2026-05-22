@@ -41,7 +41,14 @@ export function AppProviders() {
   return (
     <PersistQueryClientProvider
       client={queryClient}
-      persistOptions={{ persister: queryPersister, maxAge: CACHE_MAX_AGE_MS }}
+      persistOptions={{
+        persister: queryPersister,
+        maxAge: CACHE_MAX_AGE_MS,
+        dehydrateOptions: {
+          shouldDehydrateQuery: ({ queryKey }) =>
+            Array.isArray(queryKey) && queryKey[1] !== 'issues',
+        },
+      }}
     >
       <SafeAreaProvider>
         <ThemeModeProvider>
